@@ -1,104 +1,58 @@
-# Pizza Palooza
+# 🍕 Pizza Order App
 
-A modern pizza ordering system built with React Router and data loading capabilities.
+A simple React frontend project that lets users browse a menu, build their pizza order, and submit it with just a few details — no login required. Built as a hands-on learning project for mastering core React concepts like state management, forms, routing, and API interaction.
 
-## Features
+---
 
-- Modern React-based UI with TypeScript
-- Route-based data loading using React Router
-- Responsive design for all devices
-- Real-time order tracking
-- Easy pizza customization
-- Secure checkout process
+## 🚀 Features
 
-## Tech Stack
+### 🧑‍🍳 User
 
-- React 18+
-- React Router
-- TypeScript
-- Vite
-- ESLint for code quality
+- No authentication required
+- Enter name, phone number, and address to place an order
+- GPS location autofill option for address (if user grants permission)
+- Mark an order as **priority** (adds 20% to total price)
+- Search for an order by unique order ID
+- Upgrade an existing order to **priority** after it's placed
 
-## Getting Started
+### 🍕 Menu
 
-### Prerequisites
+- Dynamic pizza menu loaded from API
+- Displays pizza names, ingredients, prices, and availability
 
-- Node.js (v16 or higher)
-- npm or yarn package manager
+### 🛒 Cart
 
-### Installation
+- Add one or more pizzas to cart
+- Increase/decrease quantity or remove pizzas
+- Automatically updates total price (including priority fee if selected)
 
-1. Clone the repository:
-```bash
-git clone [repository-url]
-cd pizza-palooza
-```
+### 📦 Order
 
-2. Install dependencies:
-```bash
-npm install
-# or
-yarn install
-```
+- Place order by submitting a form with user and cart data
+- Sends a `POST` request to API
+- Payment is on delivery — no payment processing required
+- Each order receives a unique ID for lookup
 
-3. Start the development server:
-```bash
-npm run dev
-# or
-yarn dev
-```
+---
 
-The application will start on `http://localhost:5173`
+## 🛠️ Tech Stack
 
-## Project Structure
+- **React 18**
+- **React Router** – Page navigation
+- **Context API** – Global state management (e.g., cart, orders)
+- **Vite** – Lightning-fast development environment
+- **Tailwind CSS** (optional, if used for styling)
+- **Custom Hooks** – For features like geolocation and form handling
 
-```
-pizza-palooza/
-├── src/
-│   ├── components/     # Reusable UI components
-│   ├── pages/          # Route components
-│   ├── services/       # API and data services
-│   ├── types/          # TypeScript type definitions
-│   └── App.tsx         # Main application component
-├── public/
-└── package.json
-```
+---
 
-## Development
+## 📁 Project Structure (Planned)
 
-### Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview the production build
-- `npm run lint` - Run ESLint
-
-### Environment Variables
-
-Create a `.env` file in the root directory to configure environment variables:
-
-```
-VITE_API_URL=http://localhost:3000
-```
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details
-
-## Acknowledgments
-
-- React Router team for the excellent routing solution
-- TypeScript team for type safety
-- Vite team for blazing fast development experience
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+src/
+├── ui/ # Shared UI components (buttons, pizza item, cart item, etc.)
+├── features/ # Domain logic (cart, user, order, menu)
+├── services/ # API calls
+├── utils/ # Utility functions and helpers
+├── types/ # TypeScript type definitions
+├── App.tsx # Main app component with routing
+└── main.tsx # Entry point
