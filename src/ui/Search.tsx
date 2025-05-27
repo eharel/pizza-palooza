@@ -1,5 +1,5 @@
-import { SEARCH_TYPES, SEARCH_TYPE_LABELS } from "../../types/search";
-import { redirect, useLocation, useNavigate } from "react-router-dom";
+import { SEARCH_TYPES, SEARCH_TYPE_LABELS } from "../types/search";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 function Search() {

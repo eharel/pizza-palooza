@@ -1,7 +1,17 @@
 import { CartItemData } from "./cart";
 
+export enum OrderStatus {
+  PENDING = 'pending',
+  PREPARING = 'preparing',
+  READY = 'ready',
+  DELIVERING = 'delivering',
+  DELIVERED = 'delivered',
+  CANCELLED = 'cancelled'
+}
+
 export interface OrderItemData {
   id: string;
+  status: OrderStatus;
   customer: string;
   phone: string;
   address: string;

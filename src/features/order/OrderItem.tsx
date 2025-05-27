@@ -1,6 +1,7 @@
+import { OrderItemData } from "../../types/order";
 import { formatCurrency } from "../../utils/helpers";
 
-function OrderItem({ item, isLoadingIngredients, ingredients }) {
+function OrderItem({ item }: { item: OrderItemData }) {
   const { quantity, name, totalPrice } = item;
 
   return (

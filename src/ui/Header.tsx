@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Search from "../features/search/Search";
+import Search from "./Search";
 
 function Header() {
   return (
