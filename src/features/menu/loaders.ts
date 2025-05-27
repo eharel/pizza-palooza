@@ -16,6 +16,7 @@ export async function menuLoader({
     const searchParams = new URLSearchParams(window.location.search);
     const query = searchParams.get("q");
 
+    const searchQuery = query ? query.toLowerCase() : "";
     if (!query) {
       return menu;
     }

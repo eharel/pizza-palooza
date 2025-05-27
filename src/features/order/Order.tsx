@@ -1,5 +1,4 @@
 // Test ID: IIDSAT
-import { useParams } from "react-router-dom";
 import { useLoaderData } from "react-router-dom";
 import {
   calcMinutesLeft,
@@ -48,15 +47,8 @@ function Order() {
   const order = useLoaderData() as OrderItemData;
 
   // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
-  const {
-    id,
-    status,
-    priority,
-    priorityPrice,
-    orderPrice,
-    estimatedDelivery,
-    cart,
-  } = order;
+  const { priority, priorityPrice, orderPrice, estimatedDelivery, status } =
+    order;
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
 
   return (

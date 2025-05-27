@@ -9,7 +9,7 @@ import AppLayout from "./ui/AppLayout";
 import ErrorPage from "./ui/Error";
 import { orderLoader } from "./features/order/loaders";
 import SearchResults from "./features/search/SearchResults";
-import { searchLoader } from "./features/search/loaders";
+import { redirectLoader, searchLoader } from "./features/search/loaders";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +43,10 @@ const router = createBrowserRouter([
         path: "search",
         element: <SearchResults />,
         loader: searchLoader,
+      },
+      {
+        path: "redirect",
+        loader: redirectLoader,
       },
     ],
   },

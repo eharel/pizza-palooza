@@ -29,3 +29,23 @@ export async function searchLoader({ request }: LoaderFunctionArgs) {
   // Optional: fallback
   return { type: "menu", results: [], query: q };
 }
+
+export async function redirectLoader({ request }: LoaderFunctionArgs) {
+  const url = new URL(request.url);
+  const q = url.searchParams.get("q")?.trim() || "";
+  const type = url.searchParams.get("type") || "menu";
+
+  if (!q) return null;
+
+  if (type === "orders") {
+    return redirect(`/order/${q}`);
+  }
+
+  if (type === "menu") {
+    return redirect(`/menu?q=${q}`);
+  }
+
+  return redirect(
+    `/search?q=${encodeURIComponent(q)}&type=${encodeURIComponent(type)}`
+  );
+}

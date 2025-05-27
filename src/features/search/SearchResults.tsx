@@ -1,5 +1,5 @@
 import { useLoaderData } from "react-router-dom";
-import type { SearchType } from "../types";
+import type { SearchType } from "../../types/search";
 
 type LoaderReturn = {
   type: SearchType;

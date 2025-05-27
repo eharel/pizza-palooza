@@ -20,7 +20,7 @@ function Search() {
   return (
     <form
       role="search"
-      action="/search"
+      action="/redirect"
       method="get"
       className="flex items-center gap-2"
     >
