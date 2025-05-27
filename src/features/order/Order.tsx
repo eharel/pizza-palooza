@@ -1,10 +1,12 @@
 // Test ID: IIDSAT
-
+import { useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import {
   calcMinutesLeft,
   formatCurrency,
   formatDate,
 } from "../../utils/helpers";
+import { OrderItemData } from "../../types/order";
 
 const order = {
   id: "ABCDEF",
@@ -42,6 +44,9 @@ const order = {
 };
 
 function Order() {
+  // Fetch the order from the API
+  const order = useLoaderData() as OrderItemData;
+
   // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
   const {
     id,

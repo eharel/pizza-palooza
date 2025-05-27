@@ -1,10 +1,15 @@
 import { CartItemData } from "./cart";
 
-export interface Order {
+export interface OrderItemData {
   id: string;
-  name: string;
+  customer: string;
   phone: string;
   address: string;
   priority: boolean;
   pizzas: CartItemData[];
+  estimatedDelivery: string;
+  position: string;
+  orderPrice: number;
+  priorityPrice: number;
+  cart: CartItemData[];
 }
