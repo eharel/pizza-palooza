@@ -1,4 +1,4 @@
-import { OrderItemData } from "../types/order";
+import { OrderCreateData, OrderItemData } from "../types/order";
 import { Pizza } from "../types/pizza";
 
 const API_URL = "https://react-fast-pizza-api.onrender.com/api";
@@ -29,11 +29,13 @@ export async function getOrder(id: string): Promise<OrderItemData> {
   return data;
 }
 
-export async function createOrder(newOrder: OrderItemData) {
+export async function createOrder(
+  order: OrderCreateData
+): Promise<OrderItemData> {
   try {
     const res = await fetch(`${API_URL}/order`, {
       method: "POST",
-      body: JSON.stringify(newOrder),
+      body: JSON.stringify(order),
       headers: {
         "Content-Type": "application/json",
       },

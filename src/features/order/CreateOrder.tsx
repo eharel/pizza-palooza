@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { Form, redirect } from "react-router-dom";
+import { createOrder } from "../../services/apiRestaurant";
+import { OrderCreateData } from "../../types/order";
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -38,7 +41,7 @@ function CreateOrder() {
     <div>
       <h2>Ready to order? Let's go!</h2>
 
-      <form>
+      <Form method="POST" action="/order/new">
         <div>
           <label>First Name</label>
           <input type="text" name="customer" required />
@@ -70,11 +73,48 @@ function CreateOrder() {
         </div>
 
         <div>
-          <button>Order now</button>
+          <input type="hidden" name="cart" value={JSON.stringify(cart)} />
+          <button type="submit">Order now</button>
         </div>
-      </form>
+      </Form>
     </div>
   );
 }
 
+export async function createOrderAction({ request }: { request: Request }) {
+  const formData = await request.formData();
+  const cartValue = formData.get("cart");
+  if (typeof cartValue !== "string") {
+    throw new Error("Invalid cart data");
+  }
+
+  const order: OrderCreateData = {
+    customer: formData.get("customer") as string,
+    phone: formData.get("phone") as string,
+    address: formData.get("address") as string,
+    priority: formData.get("priority") === "on",
+    cart: JSON.parse(cartValue),
+  };
+
+  const newOrder = await createOrder(order);
+  console.log(newOrder);
+
+  return redirect(`/order/${newOrder.id}`);
+}
+
 export default CreateOrder;
+
+// export interface OrderItemData {
+//   id: string;
+//   status: OrderStatus;
+//   customer: string;
+//   phone: string;
+//   address: string;
+//   priority: boolean;
+//   pizzas: CartItemData[];
+//   estimatedDelivery: string;
+//   position: string;
+//   orderPrice: number;
+//   priorityPrice: number;
+//   cart: CartItemData[];
+// }
