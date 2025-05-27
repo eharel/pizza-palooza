@@ -1,22 +1,16 @@
 import { Pizza } from "../../types/pizza";
 import { getMenu } from "../../services/apiRestaurant";
-import { SearchQuery } from "../../types/search";
+import { LoaderFunctionArgs } from "react-router-dom";
 
 export async function menuLoader({
-  params,
-  searchParams: paramsSearchParams,
-}: {
-  params: any;
-  searchParams: URLSearchParams;
-}): Promise<Pizza[]> {
+  request,
+}: LoaderFunctionArgs): Promise<Pizza[]> {
   try {
     const menu = await getMenu();
 
-    // Get the current URLSearchParams from the window
-    const searchParams = new URLSearchParams(window.location.search);
-    const query = searchParams.get("q");
+    const url = new URL(request.url);
+    const query = url.searchParams.get("q")?.toLowerCase() ?? "";
 
-    const searchQuery = query ? query.toLowerCase() : "";
     if (!query) {
       return menu;
     }
@@ -26,7 +20,7 @@ export async function menuLoader({
       // Check pizza name and ingredients for the search term
       return (
         pizza.name.toLowerCase().includes(query) ||
-        pizza.ingredients.some((ingredient) =>
+        pizza.ingredients?.some((ingredient) =>
           ingredient.toLowerCase().includes(query)
         )
       );

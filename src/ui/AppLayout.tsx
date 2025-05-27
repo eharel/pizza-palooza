@@ -9,11 +9,8 @@ function AppLayout() {
 
   return (
     <div className="layout">
-      {isLoading && <Loader />}
       <Header />
-      <main>
-        <Outlet />
-      </main>
+      <main>{isLoading ? <Loader /> : <Outlet />}</main>
       <Footer />
     </div>
   );

@@ -1,31 +1,54 @@
-import {
-  SEARCH_TYPES,
-  SEARCH_TYPE_LABELS,
-  SearchType,
-} from "../../types/search";
-import { useLocation } from "react-router-dom";
-import { useMemo } from "react";
+import { SEARCH_TYPES, SEARCH_TYPE_LABELS } from "../../types/search";
+import { redirect, useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function Search() {
   const location = useLocation();
-
-  // Infer type from path
-  const defaultType: SearchType = useMemo(() => {
+  const [query, setQuery] = useState("");
+  const [searchDomain, setSearchDomain] = useState(() => {
     const path = location.pathname;
     if (path.startsWith("/order")) return "orders";
     if (path.startsWith("/menu")) return "menu";
     return "menu"; // fallback
-  }, [location.pathname]);
+  });
+  const navigate = useNavigate();
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!query) return;
+    console.log("Search query: ", query);
+    console.log("Search domain: ", searchDomain);
+
+    if (searchDomain === "orders") {
+      console.log("Redirecting to order: ", query);
+      return navigate(`/order/${query}`);
+    }
+
+    if (searchDomain === "menu") {
+      return navigate(`/menu?q=${query}`);
+    }
+  };
 
   return (
     <form
       role="search"
-      action="/redirect"
+      // action="/redirect"
       method="get"
       className="flex items-center gap-2"
+      onSubmit={handleSubmit}
     >
-      <input type="search" name="q" placeholder="Search..." />
-      <select name="type" defaultValue={defaultType}>
+      <input
+        type="search"
+        name="q"
+        placeholder="Search..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
+      <select
+        name="type"
+        defaultValue={searchDomain}
+        onChange={(e) => setSearchDomain(e.target.value)}
+      >
         {SEARCH_TYPES.map((type) => (
           <option key={type} value={type}>
             {SEARCH_TYPE_LABELS[type]}

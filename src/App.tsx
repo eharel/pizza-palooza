@@ -39,11 +39,11 @@ const router = createBrowserRouter([
         element: <Order />,
         loader: orderLoader,
       },
-      {
-        path: "search",
-        element: <SearchResults />,
-        loader: searchLoader,
-      },
+      // {
+      //   path: "search",
+      //   element: <SearchResults />,
+      //   loader: searchLoader,
+      // },
       {
         path: "redirect",
         loader: redirectLoader,
