@@ -15,7 +15,15 @@ export async function getMenu(): Promise<Pizza[]> {
 
 export async function getOrder(id: string): Promise<OrderItemData> {
   const res = await fetch(`${API_URL}/order/${id}`);
-  if (!res.ok) throw Error(`Couldn't find order #${id}`);
+  console.log(res);
+
+  if (!res.ok) {
+    throw new Response(`Couldn't find order #${id}`, {
+      status: res.status,
+      statusText: res.statusText || "Not Found",
+    });
+  }
+  // if (!res.ok) throw Error(`Couldn't find order #${id}`);
 
   const { data } = await res.json();
   return data;

@@ -6,13 +6,13 @@ import Cart from "./features/cart/Cart";
 import Order from "./features/order/Order";
 import CreateOrder from "./features/order/CreateOrder";
 import AppLayout from "./ui/AppLayout";
-import ErrorPage from "./ui/Error";
 import { orderLoader } from "./features/order/loaders";
+import Error from "./ui/Error";
 
 const router = createBrowserRouter([
   {
     element: <AppLayout />,
-    errorElement: <ErrorPage />,
+    errorElement: <Error />,
     children: [
       {
         index: true,

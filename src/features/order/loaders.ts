@@ -7,10 +7,11 @@ export async function orderLoader({
 }: LoaderFunctionArgs): Promise<OrderItemData> {
   try {
     const id = params.id;
-    if (!id) throw Error("No order ID provided");
+    if (!id) throw new Response("No order ID provided", { status: 404 });
     const order = await getOrder(id);
     return order;
   } catch (err) {
+    if (err instanceof Response) throw err;
     throw new Response("Failed to load order", { status: 500 });
   }
 }
