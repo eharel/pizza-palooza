@@ -2,7 +2,7 @@ import { formatCurrency } from "../../utils/helpers";
 import type { CartItemData } from "../../types/cart";
 
 function CartItemDisplay({ item }: { item: CartItemData }) {
-  const { pizzaId, name, quantity, totalPrice } = item;
+  const { name, quantity, totalPrice } = item;
 
   return (
     <li>

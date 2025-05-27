@@ -1,10 +1,25 @@
 import { CartItemData } from "./cart";
 
-export interface Order {
+export enum OrderStatus {
+  PENDING = 'pending',
+  PREPARING = 'preparing',
+  READY = 'ready',
+  DELIVERING = 'delivering',
+  DELIVERED = 'delivered',
+  CANCELLED = 'cancelled'
+}
+
+export interface OrderItemData {
   id: string;
-  name: string;
+  status: OrderStatus;
+  customer: string;
   phone: string;
   address: string;
   priority: boolean;
   pizzas: CartItemData[];
+  estimatedDelivery: string;
+  position: string;
+  orderPrice: number;
+  priorityPrice: number;
+  cart: CartItemData[];
 }

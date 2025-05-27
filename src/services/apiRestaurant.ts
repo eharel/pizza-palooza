@@ -1,4 +1,4 @@
-import { Order } from "../types/order";
+import { OrderItemData } from "../types/order";
 import { Pizza } from "../types/pizza";
 
 const API_URL = "https://react-fast-pizza-api.onrender.com/api";
@@ -13,15 +13,23 @@ export async function getMenu(): Promise<Pizza[]> {
   return data;
 }
 
-export async function getOrder(id: string): Promise<Order> {
+export async function getOrder(id: string): Promise<OrderItemData> {
   const res = await fetch(`${API_URL}/order/${id}`);
-  if (!res.ok) throw Error(`Couldn't find order #${id}`);
+  console.log(res);
+
+  if (!res.ok) {
+    throw new Response(`Couldn't find order #${id}`, {
+      status: res.status,
+      statusText: res.statusText || "Not Found",
+    });
+  }
+  // if (!res.ok) throw Error(`Couldn't find order #${id}`);
 
   const { data } = await res.json();
   return data;
 }
 
-export async function createOrder(newOrder: Order) {
+export async function createOrder(newOrder: OrderItemData) {
   try {
     const res = await fetch(`${API_URL}/order`, {
       method: "POST",
@@ -39,7 +47,7 @@ export async function createOrder(newOrder: Order) {
   }
 }
 
-export async function updateOrder(id: string, updateObj: Order) {
+export async function updateOrder(id: string, updateObj: OrderItemData) {
   try {
     const res = await fetch(`${API_URL}/order/${id}`, {
       method: "PATCH",
