@@ -1,31 +1,35 @@
-// src/pages/ErrorPage.tsx
 import {
   useNavigate,
   useRouteError,
   isRouteErrorResponse,
 } from "react-router-dom";
+import Header from "./Header";
+import Footer from "./Footer";
 
-function ErrorPage() {
+function Error() {
   const error = useRouteError();
   const navigate = useNavigate();
 
+  let headline;
+  let message;
+
   if (isRouteErrorResponse(error)) {
-    return (
-      <div>
-        <h1>{error.status}</h1>
-        <p>{error.statusText}</p>
-        <button onClick={() => navigate(-1)}>&larr; Go back</button>
-      </div>
-    );
+    headline = `${error.status} ${error.statusText}`;
+    message = error.data;
+  } else {
+    headline = "Unexpected Error";
+    message = (error as Error).message;
   }
 
   return (
     <div>
-      <h1>Unexpected Error</h1>
-      <p>{(error as Error).message}</p>
+      <Header />
+      <h1>{headline}</h1>
+      <p>{message}</p>
       <button onClick={() => navigate(-1)}>&larr; Go back</button>
+      <Footer />
     </div>
   );
 }
 
-export default ErrorPage;
+export default Error;
