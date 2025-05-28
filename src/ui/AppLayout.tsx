@@ -9,15 +9,19 @@ function AppLayout() {
   const isLoading = navigation.state === "loading";
 
   return (
-    <div className="layout">
+    <div className="layout bg-surface">
       <Header />
-      <main>
+      <main className="container mx-auto px-4 py-8 md:px-8">
         {isLoading ? (
-          <Loader />
+          <div className="flex items-center justify-center h-[50vh]">
+            <Loader />
+          </div>
         ) : (
           <>
             <Outlet />
-            <CartOverview />
+            <div className="fixed bottom-0 left-0 right-0 z-50">
+              <CartOverview />
+            </div>
           </>
         )}
       </main>
