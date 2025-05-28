@@ -31,3 +31,6 @@ export interface OrderItemData {
   priorityPrice: number;
   cart: CartItemData[];
 }
+
+export type FieldError = "customer" | "phone" | "address";
+export type FormErrors = Partial<Record<FieldError, string>>;

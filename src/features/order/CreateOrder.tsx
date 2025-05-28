@@ -1,13 +1,6 @@
-import { useState } from "react";
-import { Form, redirect } from "react-router-dom";
-import { createOrder } from "../../services/apiRestaurant";
-import { OrderCreateData } from "../../types/order";
-
-// https://uibakery.io/regex-library/phone-number
-const isValidPhone = (str) =>
-  /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
-    str
-  );
+import { Form, useActionData, useNavigation } from "react-router-dom";
+import { FormErrors } from "../../types/order";
+import { ActionResults } from "../../types/shared";
 
 const fakeCart = [
   {
@@ -34,6 +27,11 @@ const fakeCart = [
 ];
 
 function CreateOrder() {
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting";
+
+  const actionData = useActionData() as ActionResults<never, FormErrors> | null;
+
   // const [withPriority, setWithPriority] = useState(false);
   const cart = fakeCart;
 
@@ -45,6 +43,9 @@ function CreateOrder() {
         <div>
           <label>First Name</label>
           <input type="text" name="customer" required />
+          {actionData?.success === false && actionData.errors?.customer && (
+            <p className="error">{actionData.errors.customer}</p>
+          )}
         </div>
 
         <div>
@@ -52,6 +53,9 @@ function CreateOrder() {
           <div>
             <input type="tel" name="phone" required />
           </div>
+          {actionData?.success === false && actionData.errors?.phone && (
+            <p className="error">{actionData.errors.phone}</p>
+          )}
         </div>
 
         <div>
@@ -59,6 +63,9 @@ function CreateOrder() {
           <div>
             <input type="text" name="address" required />
           </div>
+          {actionData?.success === false && actionData.errors?.address && (
+            <p className="error">{actionData.errors.address}</p>
+          )}
         </div>
 
         <div>
@@ -74,47 +81,13 @@ function CreateOrder() {
 
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-          <button type="submit">Order now</button>
+          <button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Placing order..." : "Order now"}
+          </button>
         </div>
       </Form>
     </div>
   );
 }
 
-export async function createOrderAction({ request }: { request: Request }) {
-  const formData = await request.formData();
-  const cartValue = formData.get("cart");
-  if (typeof cartValue !== "string") {
-    throw new Error("Invalid cart data");
-  }
-
-  const order: OrderCreateData = {
-    customer: formData.get("customer") as string,
-    phone: formData.get("phone") as string,
-    address: formData.get("address") as string,
-    priority: formData.get("priority") === "on",
-    cart: JSON.parse(cartValue),
-  };
-
-  const newOrder = await createOrder(order);
-  console.log(newOrder);
-
-  return redirect(`/order/${newOrder.id}`);
-}
-
 export default CreateOrder;
-
-// export interface OrderItemData {
-//   id: string;
-//   status: OrderStatus;
-//   customer: string;
-//   phone: string;
-//   address: string;
-//   priority: boolean;
-//   pizzas: CartItemData[];
-//   estimatedDelivery: string;
-//   position: string;
-//   orderPrice: number;
-//   priorityPrice: number;
-//   cart: CartItemData[];
-// }

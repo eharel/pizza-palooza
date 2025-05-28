@@ -4,10 +4,11 @@ import Menu from "./features/menu/Menu";
 import { menuLoader } from "./features/menu/loaders";
 import Cart from "./features/cart/Cart";
 import Order from "./features/order/Order";
-import CreateOrder, { createOrderAction } from "./features/order/CreateOrder";
+import { createOrderAction } from "./features/order/orderActions";
 import AppLayout from "./ui/AppLayout";
-import { orderLoader } from "./features/order/loaders";
+import { orderLoader } from "./features/order/orderLoaders";
 import Error from "./ui/Error";
+import CreateOrder from "./features/order/CreateOrder";
 
 const router = createBrowserRouter([
   {
