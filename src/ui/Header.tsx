@@ -1,12 +1,15 @@
 import { Link } from "react-router-dom";
 import Search from "./Search";
+import Username from "../features/user/Username";
 
 function Header() {
   return (
-    <header>
-      <Link to="/">PizzaPalooza</Link>
+    <header className="bg-cheese-light">
+      <Link to="/" className="tracking-[0.5rem]">
+        PizzaPalooza
+      </Link>
       <Search />
-      <p>username TODO</p>
+      <Username />
     </header>
   );
 }
