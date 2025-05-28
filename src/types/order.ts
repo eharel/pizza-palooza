@@ -1,12 +1,20 @@
 import { CartItemData } from "./cart";
 
 export enum OrderStatus {
-  PENDING = 'pending',
-  PREPARING = 'preparing',
-  READY = 'ready',
-  DELIVERING = 'delivering',
-  DELIVERED = 'delivered',
-  CANCELLED = 'cancelled'
+  PENDING = "pending",
+  PREPARING = "preparing",
+  READY = "ready",
+  DELIVERING = "delivering",
+  DELIVERED = "delivered",
+  CANCELLED = "cancelled",
+}
+
+export interface OrderCreateData {
+  customer: string;
+  phone: string;
+  address: string;
+  priority: boolean;
+  cart: CartItemData[];
 }
 
 export interface OrderItemData {
@@ -23,3 +31,6 @@ export interface OrderItemData {
   priorityPrice: number;
   cart: CartItemData[];
 }
+
+export type FieldError = "customer" | "phone" | "address";
+export type FormErrors = Partial<Record<FieldError, string>>;

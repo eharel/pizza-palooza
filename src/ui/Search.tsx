@@ -16,11 +16,8 @@ function Search() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!query) return;
-    console.log("Search query: ", query);
-    console.log("Search domain: ", searchDomain);
 
     if (searchDomain === "orders") {
-      console.log("Redirecting to order: ", query);
       return navigate(`/order/${query}`);
     }
 
