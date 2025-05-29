@@ -11,7 +11,7 @@ function AppLayout() {
   return (
     <div className="layout bg-surface">
       <Header />
-      <main className="container mx-auto px-4 py-8 md:px-8">
+      <main className="container mx-auto px-4 py-8 md:px-8 pb-20"> {/* Added pb-20 for cart spacing */}
         {isLoading ? (
           <div className="flex items-center justify-center h-[50vh]">
             <Loader />
@@ -19,12 +19,17 @@ function AppLayout() {
         ) : (
           <>
             <Outlet />
-            <div className="fixed bottom-0 left-0 right-0 z-50">
-              <CartOverview />
-            </div>
           </>
         )}
       </main>
+      
+      {/* Cart positioned outside main content flow */}
+      {!isLoading && (
+        <div className="fixed bottom-0 left-0 right-0 z-50">
+          <CartOverview />
+        </div>
+      )}
+      
       <Footer />
     </div>
   );
