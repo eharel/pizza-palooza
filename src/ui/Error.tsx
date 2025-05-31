@@ -1,10 +1,7 @@
-import {
-  isRouteErrorResponse,
-  useNavigate,
-  useRouteError,
-} from "react-router-dom";
+import { isRouteErrorResponse, useRouteError } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
+import LinkButton from "./Buttons/LinkButton.tsx";
 
 interface ErrorInfo {
   headline: string;
@@ -14,16 +11,15 @@ interface ErrorInfo {
 function Error() {
   const error = useRouteError();
   const { headline, message } = parseError(error);
-  const navigate = useNavigate();
 
   return (
     <>
       <Header />
-      <div className="min-h-screen flex flex-col items-center justify-center p-8 text-center">
+      <div className="flex min-h-screen flex-col items-center justify-center p-8 text-center">
         <h1 className="text-3xl font-bold text-red-600">{headline}</h1>
         <p className="mt-2 text-lg text-gray-700">{message}</p>
+        <LinkButton to="-1">&larr; Go back</LinkButton>
       </div>
-      <button onClick={() => navigate(-1)}>&larr; Go back</button>
       <Footer />
     </>
   );

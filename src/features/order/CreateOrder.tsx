@@ -1,6 +1,7 @@
 import { Form, useActionData, useNavigation } from "react-router-dom";
 import { FormErrors } from "../../types/order";
 import { ActionResults } from "../../types/shared";
+import Button from "../../ui/Buttons/Button";
 
 const fakeCart = [
   {
@@ -46,16 +47,9 @@ function CreateOrder() {
           <label className="block font-medium text-text-secondary">
             First Name
           </label>
-          <input
-            type="text"
-            name="customer"
-            required
-            className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary"
-          />
+          <input type="text" name="customer" required className="input" />
           {actionData?.success === false && actionData.errors?.customer && (
-            <p className="mt-1 text-sm text-tomato-light">
-              {actionData.errors.customer}
-            </p>
+            <p className="form-error">{actionData.errors.customer}</p>
           )}
         </div>
 
@@ -64,17 +58,10 @@ function CreateOrder() {
             Phone number
           </label>
           <div>
-            <input
-              type="tel"
-              name="phone"
-              required
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary"
-            />
+            <input type="tel" name="phone" required className="input" />
           </div>
           {actionData?.success === false && actionData.errors?.phone && (
-            <p className="mt-1 text-sm text-tomato-light">
-              {actionData.errors.phone}
-            </p>
+            <p className="form-error">{actionData.errors.phone}</p>
           )}
         </div>
 
@@ -83,17 +70,10 @@ function CreateOrder() {
             Address
           </label>
           <div>
-            <input
-              type="text"
-              name="address"
-              required
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary"
-            />
+            <input type="text" name="address" required className="input" />
           </div>
           {actionData?.success === false && actionData.errors?.address && (
-            <p className="mt-1 text-sm text-tomato-light">
-              {actionData.errors.address}
-            </p>
+            <p className="form-error">{actionData.errors.address}</p>
           )}
         </div>
 
@@ -113,13 +93,9 @@ function CreateOrder() {
 
         <div className="pt-4">
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="btn btn-primary w-full rounded-lg py-3 font-bold text-white transition-all hover:bg-primary-dark active:scale-95 active:shadow-inner disabled:cursor-not-allowed disabled:bg-gray-400 disabled:opacity-70"
-          >
+          <Button disabled={isSubmitting}>
             {isSubmitting ? "Placing order..." : "Order now"}
-          </button>
+          </Button>
         </div>
       </Form>
     </div>

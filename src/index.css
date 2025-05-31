@@ -52,6 +52,14 @@
     @apply grid min-h-screen;
     grid-template-rows: auto 1fr auto;
   }
+
+  .input {
+    @apply w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary;
+  }
+
+  .form-error {
+    @apply mt-1 text-sm text-tomato-light;
+  }
 }
 
 /* https://dev.to/afif/i-made-100-css-loaders-for-your-next-project-4eje */

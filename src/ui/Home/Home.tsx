@@ -36,23 +36,7 @@ function Home() {
 
       <Marketing />
 
-      {/* Create User Section */}
-      <div className="bg-warm py-12">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-md">
-            <h2 className="mb-6 text-center text-2xl font-bold">
-              Create an Account
-            </h2>
-            <p className="mb-8 text-center text-text-secondary">
-              Join PizzaPalooza today and get 20% off your first order! Your
-              pizza will be at your door in 30 minutes or less, guaranteed.
-            </p>
-          </div>
-          <div className="card p-6 text-center">
-            <CreateUser />
-          </div>
-        </div>
-      </div>
+      <CreateUser />
     </div>
   );
 }
