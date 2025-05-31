@@ -36,50 +36,64 @@ function CreateOrder() {
   const cart = fakeCart;
 
   return (
-    <div className="max-w-2xl mx-auto bg-surface-light rounded-2xl p-8 shadow-md">
-      <h2 className="text-3xl font-bold mb-8 text-center font-pizza text-primary">Ready to order? Let's go!</h2>
+    <div className="mx-auto max-w-2xl rounded-2xl bg-surface-light p-8 shadow-md">
+      <h2 className="mb-8 text-center font-pizza text-3xl font-bold text-primary">
+        Ready to order? Let's go!
+      </h2>
 
       <Form method="POST" action="/order/new" className="space-y-6">
         <div className="space-y-2">
-          <label className="block font-medium text-text-secondary">First Name</label>
-          <input 
-            type="text" 
-            name="customer" 
-            required 
-            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" 
+          <label className="block font-medium text-text-secondary">
+            First Name
+          </label>
+          <input
+            type="text"
+            name="customer"
+            required
+            className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary"
           />
           {actionData?.success === false && actionData.errors?.customer && (
-            <p className="text-tomato-light text-sm mt-1">{actionData.errors.customer}</p>
+            <p className="mt-1 text-sm text-tomato-light">
+              {actionData.errors.customer}
+            </p>
           )}
         </div>
 
         <div className="space-y-2">
-          <label className="block font-medium text-text-secondary">Phone number</label>
+          <label className="block font-medium text-text-secondary">
+            Phone number
+          </label>
           <div>
-            <input 
-              type="tel" 
-              name="phone" 
-              required 
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" 
+            <input
+              type="tel"
+              name="phone"
+              required
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
           {actionData?.success === false && actionData.errors?.phone && (
-            <p className="text-tomato-light text-sm mt-1">{actionData.errors.phone}</p>
+            <p className="mt-1 text-sm text-tomato-light">
+              {actionData.errors.phone}
+            </p>
           )}
         </div>
 
         <div className="space-y-2">
-          <label className="block font-medium text-text-secondary">Address</label>
+          <label className="block font-medium text-text-secondary">
+            Address
+          </label>
           <div>
-            <input 
-              type="text" 
-              name="address" 
-              required 
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" 
+            <input
+              type="text"
+              name="address"
+              required
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
           {actionData?.success === false && actionData.errors?.address && (
-            <p className="text-tomato-light text-sm mt-1">{actionData.errors.address}</p>
+            <p className="mt-1 text-sm text-tomato-light">
+              {actionData.errors.address}
+            </p>
           )}
         </div>
 
@@ -90,17 +104,19 @@ function CreateOrder() {
             id="priority"
             // value={withPriority}
             // onChange={(e) => setWithPriority(e.target.checked)}
-            className="h-5 w-5 text-primary focus:ring-primary rounded"
+            className="h-5 w-5 rounded text-primary focus:ring-primary"
           />
-          <label htmlFor="priority" className="font-medium text-text-secondary">Want to give your order priority?</label>
+          <label htmlFor="priority" className="font-medium text-text-secondary">
+            Want to give your order priority?
+          </label>
         </div>
 
         <div className="pt-4">
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             disabled={isSubmitting}
-            className="w-full btn btn-primary py-3 rounded-lg font-bold text-white transition-all hover:bg-primary-dark disabled:opacity-70"
+            className="btn btn-primary w-full rounded-lg py-3 font-bold text-white transition-all hover:bg-primary-dark active:scale-95 active:shadow-inner disabled:cursor-not-allowed disabled:bg-gray-400 disabled:opacity-70"
           >
             {isSubmitting ? "Placing order..." : "Order now"}
           </button>

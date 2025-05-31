@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&family=Satisfy&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&family=Satisfy&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -8,41 +8,46 @@
   html {
     scroll-behavior: smooth;
   }
-  
+
   body {
-    @apply bg-surface text-text-primary font-sans;
+    @apply bg-surface font-sans text-text-primary;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-display font-semibold;
   }
 }
 
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-colors duration-200;
+    @apply inline-flex items-center justify-center rounded-lg px-4 py-2 font-medium transition-all duration-200 active:translate-y-0.5 active:scale-95 active:opacity-80 active:shadow-inner active:brightness-90 active:contrast-125;
   }
-  
+
   .btn-primary {
     @apply bg-primary text-white hover:bg-primary-dark;
   }
-  
+
   .btn-secondary {
     @apply bg-cheese text-stone-dark hover:bg-cheese-dark;
   }
-  
+
   .btn-outline {
     @apply border-2 border-primary text-primary hover:bg-primary/10;
   }
-  
+
   .card {
-    @apply bg-surface-light rounded-xl shadow-card p-4;
+    @apply rounded-xl bg-surface-light p-4 shadow-card;
   }
-  
+
   .input {
-    @apply px-4 py-2 border border-stone-light rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50;
+    @apply rounded-lg border border-stone-light px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50;
   }
-  
+
   .layout {
     @apply grid min-h-screen;
     grid-template-rows: auto 1fr auto;
@@ -54,22 +59,37 @@
   width: 45px;
   aspect-ratio: 0.75;
   --c: no-repeat linear-gradient(#dc2626 0 0);
-  background: var(--c) 0% 50%, var(--c) 50% 50%, var(--c) 100% 50%;
+  background:
+    var(--c) 0% 50%,
+    var(--c) 50% 50%,
+    var(--c) 100% 50%;
   background-size: 20% 50%;
   animation: loading 1s infinite linear;
 }
 
 @keyframes loading {
   20% {
-    background-position: 0% 0%, 50% 50%, 100% 50%;
+    background-position:
+      0% 0%,
+      50% 50%,
+      100% 50%;
   }
   40% {
-    background-position: 0% 100%, 50% 0%, 100% 50%;
+    background-position:
+      0% 100%,
+      50% 0%,
+      100% 50%;
   }
   60% {
-    background-position: 0% 50%, 50% 100%, 100% 0%;
+    background-position:
+      0% 50%,
+      50% 100%,
+      100% 0%;
   }
   80% {
-    background-position: 0% 50%, 50% 50%, 100% 100%;
+    background-position:
+      0% 50%,
+      50% 50%,
+      100% 100%;
   }
 }
