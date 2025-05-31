@@ -1,29 +1,49 @@
-import { useState } from 'react';
+import { useState } from "react";
+import Button from "../../ui/Buttons/Button";
 
 function CreateUser() {
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState("");
 
-  function handleSubmit(e) {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <p>👋 Welcome! Please start by telling us your name:</p>
+    <div className="container mx-auto max-w-2xl rounded-lg bg-warm px-4 py-12">
+      <div className="mx-auto max-w-md">
+        <h2 className="mb-6 text-center text-2xl font-bold">
+          Create an Account
+        </h2>
+        <p className="mb-8 text-center text-text-secondary">
+          Join PizzaPalooza today and get 20% off your first order! Your pizza
+          will be at your door in 30 minutes or less, guaranteed.
+        </p>
+      </div>
+      <div className="card p-6 text-center">
+        <form onSubmit={handleSubmit} className="mx-auto max-w-md">
+          <p>👋 Welcome! Please start by telling us your name:</p>
 
-      <input
-        type="text"
-        placeholder="Your full name"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
+          <input
+            type="text"
+            placeholder="Your full name"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="input mb-6 mt-4 text-center"
+          />
 
-      {username !== '' && (
-        <div>
-          <button>Start ordering</button>
-        </div>
-      )}
-    </form>
+          {username !== "" && (
+            <div>
+              <Button
+                disabled={username === ""}
+                classNameAddition="rounded-full"
+              >
+                Start ordering
+              </Button>
+            </div>
+          )}
+        </form>
+      </div>
+    </div>
   );
 }
 

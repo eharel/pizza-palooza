@@ -1,6 +1,7 @@
 import { Form, useActionData, useNavigation } from "react-router-dom";
 import { FormErrors } from "../../types/order";
 import { ActionResults } from "../../types/shared";
+import Button from "../../ui/Buttons/Button";
 
 const fakeCart = [
   {
@@ -36,54 +37,65 @@ function CreateOrder() {
   const cart = fakeCart;
 
   return (
-    <div>
-      <h2>Ready to order? Let's go!</h2>
+    <div className="mx-auto max-w-2xl rounded-2xl bg-surface-light p-8 shadow-md">
+      <h2 className="mb-8 text-center font-pizza text-3xl font-bold text-primary">
+        Ready to order? Let's go!
+      </h2>
 
-      <Form method="POST" action="/order/new">
-        <div>
-          <label>First Name</label>
-          <input type="text" name="customer" required />
+      <Form method="POST" action="/order/new" className="space-y-6">
+        <div className="space-y-2">
+          <label className="block font-medium text-text-secondary">
+            First Name
+          </label>
+          <input type="text" name="customer" required className="input" />
           {actionData?.success === false && actionData.errors?.customer && (
-            <p className="error">{actionData.errors.customer}</p>
+            <p className="form-error">{actionData.errors.customer}</p>
           )}
         </div>
 
-        <div>
-          <label>Phone number</label>
+        <div className="space-y-2">
+          <label className="block font-medium text-text-secondary">
+            Phone number
+          </label>
           <div>
-            <input type="tel" name="phone" required />
+            <input type="tel" name="phone" required className="input" />
           </div>
           {actionData?.success === false && actionData.errors?.phone && (
-            <p className="error">{actionData.errors.phone}</p>
+            <p className="form-error">{actionData.errors.phone}</p>
           )}
         </div>
 
-        <div>
-          <label>Address</label>
+        <div className="space-y-2">
+          <label className="block font-medium text-text-secondary">
+            Address
+          </label>
           <div>
-            <input type="text" name="address" required />
+            <input type="text" name="address" required className="input" />
           </div>
           {actionData?.success === false && actionData.errors?.address && (
-            <p className="error">{actionData.errors.address}</p>
+            <p className="form-error">{actionData.errors.address}</p>
           )}
         </div>
 
-        <div>
+        <div className="flex items-center space-x-3 py-2">
           <input
             type="checkbox"
             name="priority"
             id="priority"
             // value={withPriority}
             // onChange={(e) => setWithPriority(e.target.checked)}
+            className="h-5 w-5 rounded text-primary focus:ring-primary"
           />
-          <label htmlFor="priority">Want to yo give your order priority?</label>
+          <label htmlFor="priority" className="font-medium text-text-secondary">
+            Want to give your order priority?
+          </label>
         </div>
 
-        <div>
+        <div className="pt-4">
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-          <button type="submit" disabled={isSubmitting}>
+          <Button disabled={isSubmitting}>
             {isSubmitting ? "Placing order..." : "Order now"}
-          </button>
+          </Button>
         </div>
       </Form>
     </div>
