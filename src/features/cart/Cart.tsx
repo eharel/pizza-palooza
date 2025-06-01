@@ -51,6 +51,20 @@ function Cart() {
   const handleClearCart = () => {
     setConfirmation({ type: 'cart' });
   };
+
+  // Handle quantity update
+  const handleUpdateQuantity = (id: number, newQuantity: number) => {
+    setCart(cart.map(item => {
+      if (item.pizzaId === id) {
+        return {
+          ...item,
+          quantity: newQuantity,
+          totalPrice: item.unitPrice * newQuantity
+        };
+      }
+      return item;
+    }));
+  };
   
   // Confirm action
   const confirmAction = () => {
@@ -110,6 +124,7 @@ function Cart() {
                 key={item.pizzaId} 
                 item={item} 
                 onRemove={handleRemoveItem}
+                onUpdateQuantity={handleUpdateQuantity}
               />
             ))}
           </ul>
