@@ -10,17 +10,10 @@ function AppLayout() {
 
   return (
     <div className="layout bg-surface">
+      {isLoading && <Loader />}
       <Header />
       <main className="container mx-auto overflow-scroll px-4 py-8 pb-20 md:px-8">
-        {isLoading ? (
-          <div className="flex h-[50vh] items-center justify-center">
-            <Loader />
-          </div>
-        ) : (
-          <>
-            <Outlet />
-          </>
-        )}
+        <Outlet />
       </main>
 
       {!isLoading && (
