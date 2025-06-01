@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "../../ui/Buttons/Button";
 import LinkButton from "../../ui/Buttons/LinkButton";
 import ConfirmationDialog from "../../ui/ConfirmationDialog";
-import CartItemDisplay from "./CartItemDisplay";
+import ItemDisplay from "../shared/ItemDisplay";
 import { formatCurrency } from "../../utils/helpers";
 
 const fakeCart = [
@@ -120,9 +120,10 @@ function Cart() {
         <div className="mt-4 space-y-6">
           <ul className="divide-y divide-stone-light">
             {cart.map((item) => (
-              <CartItemDisplay 
+              <ItemDisplay 
                 key={item.pizzaId} 
                 item={item} 
+                interactive={true}
                 onRemove={handleRemoveItem}
                 onUpdateQuantity={handleUpdateQuantity}
               />
