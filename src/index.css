@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&family=Satisfy&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@300;400;500;600;700&family=Satisfy&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -11,6 +11,7 @@
 
   body {
     @apply bg-surface font-sans text-text-primary;
+    font-family: 'Nunito', sans-serif;
   }
 
   h1,
@@ -20,6 +21,8 @@
   h5,
   h6 {
     @apply font-display font-semibold;
+    font-family: 'Lilita One', cursive;
+    letter-spacing: 0.02em;
   }
 }
 
@@ -60,44 +63,44 @@
   .form-error {
     @apply mt-1 text-sm text-tomato-light;
   }
-}
 
-/* https://dev.to/afif/i-made-100-css-loaders-for-your-next-project-4eje */
-.loader {
-  width: 45px;
-  aspect-ratio: 0.75;
-  --c: no-repeat linear-gradient(#dc2626 0 0);
-  background:
-    var(--c) 0% 50%,
-    var(--c) 50% 50%,
-    var(--c) 100% 50%;
-  background-size: 20% 50%;
-  animation: loading 1s infinite linear;
-}
+  /* https://dev.to/afif/i-made-100-css-loaders-for-your-next-project-4eje */
+  .loader {
+    width: 45px;
+    aspect-ratio: 0.75;
+    --c: no-repeat linear-gradient(theme(colors.stone.800));
+    background:
+      var(--c) 0% 50%,
+      var(--c) 50% 50%,
+      var(--c) 100% 50%;
+    background-size: 20% 50%;
+    animation: loading 1s infinite linear;
+  }
 
-@keyframes loading {
-  20% {
-    background-position:
-      0% 0%,
-      50% 50%,
-      100% 50%;
-  }
-  40% {
-    background-position:
-      0% 100%,
-      50% 0%,
-      100% 50%;
-  }
-  60% {
-    background-position:
-      0% 50%,
-      50% 100%,
-      100% 0%;
-  }
-  80% {
-    background-position:
-      0% 50%,
-      50% 50%,
-      100% 100%;
+  @keyframes loading {
+    20% {
+      background-position:
+        0% 0%,
+        50% 50%,
+        100% 50%;
+    }
+    40% {
+      background-position:
+        0% 100%,
+        50% 0%,
+        100% 50%;
+    }
+    60% {
+      background-position:
+        0% 50%,
+        50% 100%,
+        100% 0%;
+    }
+    80% {
+      background-position:
+        0% 50%,
+        50% 50%,
+        100% 100%;
+    }
   }
 }

@@ -59,8 +59,8 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Montserrat', 'system-ui', 'sans-serif'],
+        sans: ['Nunito', 'system-ui', 'sans-serif'],
+        display: ['Lilita One', 'cursive'],
         pizza: ['Satisfy', 'cursive'],
       },
       boxShadow: {
