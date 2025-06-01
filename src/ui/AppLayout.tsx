@@ -9,10 +9,10 @@ function AppLayout() {
   const isLoading = navigation.state === "loading";
 
   return (
-    <div className="layout bg-surface">
+    <div className="min-h-screen flex flex-col bg-surface overflow-hidden">
       {isLoading && <Loader />}
       <Header />
-      <main className="container mx-auto overflow-scroll px-4 py-8 pb-20 md:px-8">
+      <main className="flex-1 container mx-auto px-4 py-8 pb-20 md:px-8 overflow-y-auto overflow-x-hidden">
         <Outlet />
       </main>
 
