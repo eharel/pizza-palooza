@@ -14,7 +14,9 @@ function ItemDisplay({
   onRemove, 
   onUpdateQuantity 
 }: ItemDisplayProps) {
-  const { pizzaId, name, quantity, totalPrice } = item;
+  const { pizza, quantity, totalPrice } = item;
+  const pizzaId = pizza.id;
+  const name = pizza.name;
 
   const handleDecrement = () => {
     if (!interactive || !onUpdateQuantity) return;
@@ -73,7 +75,7 @@ function ItemDisplay({
         <p className="font-medium">{name}</p>
       </div>
       <div className="flex items-center gap-4">
-        <p className="font-bold text-stone-dark">{formatCurrency(totalPrice)}</p>
+        <p className="font-bold text-stone-dark">{formatCurrency(totalPrice ?? pizza.unitPrice * quantity)}</p>
         {interactive && onRemove && (
           <button 
             onClick={handleRemove}

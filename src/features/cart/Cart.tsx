@@ -9,24 +9,39 @@ import { RootState } from "../../store";
 
 const fakeCart = [
   {
-    pizzaId: 12,
-    name: "Mediterranean",
+    pizza: {
+      id: 12,
+      name: "Mediterranean",
+      unitPrice: 16,
+      imageUrl: "",
+      ingredients: ["tomato", "mozzarella", "olives", "feta"],
+      soldOut: false
+    },
     quantity: 2,
-    unitPrice: 16,
     totalPrice: 32,
   },
   {
-    pizzaId: 6,
-    name: "Vegetale",
+    pizza: {
+      id: 6,
+      name: "Vegetale",
+      unitPrice: 13,
+      imageUrl: "",
+      ingredients: ["tomato", "mozzarella", "vegetables"],
+      soldOut: false
+    },
     quantity: 1,
-    unitPrice: 13,
     totalPrice: 13,
   },
   {
-    pizzaId: 11,
-    name: "Spinach and Mushroom",
+    pizza: {
+      id: 11,
+      name: "Spinach and Mushroom",
+      unitPrice: 15,
+      imageUrl: "",
+      ingredients: ["tomato", "mozzarella", "spinach", "mushrooms"],
+      soldOut: false
+    },
     quantity: 1,
-    unitPrice: 15,
     totalPrice: 15,
   },
 ];
@@ -60,11 +75,11 @@ function Cart() {
   const handleUpdateQuantity = (id: number, newQuantity: number) => {
     setCart(
       cart.map((item) => {
-        if (item.pizzaId === id) {
+        if (item.pizza.id === id) {
           return {
             ...item,
             quantity: newQuantity,
-            totalPrice: item.unitPrice * newQuantity,
+            totalPrice: item.pizza.unitPrice * newQuantity,
           };
         }
         return item;
@@ -76,7 +91,7 @@ function Cart() {
   const confirmAction = () => {
     if (confirmation.type === "item" && confirmation.itemId !== undefined) {
       // Remove specific item
-      setCart(cart.filter((item) => item.pizzaId !== confirmation.itemId));
+      setCart(cart.filter((item) => item.pizza.id !== confirmation.itemId));
     } else if (confirmation.type === "cart") {
       // Clear entire cart
       setCart([]);
@@ -93,8 +108,8 @@ function Cart() {
   const getDialogProps = () => {
     if (confirmation.type === "item") {
       const itemName = cart.find(
-        (item) => item.pizzaId === confirmation.itemId,
-      )?.name;
+        (item) => item.pizza.id === confirmation.itemId,
+      )?.pizza.name;
       return {
         title: "Remove Item",
         message: `Are you sure you want to remove ${itemName || "this item"} from your cart?`,
@@ -131,7 +146,7 @@ function Cart() {
           <ul className="divide-y divide-stone-light">
             {cart.map((item) => (
               <ItemDisplay
-                key={item.pizzaId}
+                key={item.pizza.id}
                 item={item}
                 interactive={true}
                 onRemove={handleRemoveItem}

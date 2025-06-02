@@ -1,8 +1,15 @@
+import { Pizza } from "./pizza";
+
+export interface Cart {
+  items: CartItemData[];
+}
+
 export interface CartItemData {
-  pizzaId: number;
-  name: string;
+  pizza: Pizza;
   quantity: number;
-  unitPrice: number;
-  totalPrice: number;
   note?: string;
+
+  // We can derive totalPrice from pizza.unitPrice * quantity
+  // but sometimes it's useful to cache it for performance
+  totalPrice?: number;
 }
