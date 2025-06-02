@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
 import CreateUser from "../../features/user/CreateUser";
 import Marketing from "./Marketing";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 function Home() {
+  const username = useSelector((state: RootState) => state.user.username);
+
   return (
     <div className="py-8 md:py-16">
       {/* Hero Section */}
@@ -36,7 +40,7 @@ function Home() {
 
       <Marketing />
 
-      <CreateUser />
+      {username === "" && <CreateUser />}
     </div>
   );
 }

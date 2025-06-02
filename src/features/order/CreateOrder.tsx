@@ -2,6 +2,8 @@ import { Form, useActionData, useNavigation } from "react-router-dom";
 import { FormErrors } from "../../types/order";
 import { ActionResults } from "../../types/shared";
 import Button from "../../ui/Buttons/Button";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 const fakeCart = [
   {
@@ -30,6 +32,7 @@ const fakeCart = [
 function CreateOrder() {
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
+  const username = useSelector((state: RootState) => state.user.username);
 
   const actionData = useActionData() as ActionResults<never, FormErrors> | null;
 
@@ -47,7 +50,13 @@ function CreateOrder() {
           <label className="block font-medium text-text-secondary">
             First Name
           </label>
-          <input type="text" name="customer" required className="input" />
+          <input
+            type="text"
+            name="customer"
+            required
+            className="input"
+            defaultValue={username}
+          />
           {actionData?.success === false && actionData.errors?.customer && (
             <p className="form-error">{actionData.errors.customer}</p>
           )}
@@ -58,7 +67,13 @@ function CreateOrder() {
             Phone number
           </label>
           <div>
-            <input type="tel" name="phone" required className="input" />
+            <input
+              type="tel"
+              name="phone"
+              required
+              className="input"
+              defaultValue={""}
+            />
           </div>
           {actionData?.success === false && actionData.errors?.phone && (
             <p className="form-error">{actionData.errors.phone}</p>
@@ -70,7 +85,13 @@ function CreateOrder() {
             Address
           </label>
           <div>
-            <input type="text" name="address" required className="input" />
+            <input
+              type="text"
+              name="address"
+              required
+              className="input"
+              defaultValue={""}
+            />
           </div>
           {actionData?.success === false && actionData.errors?.address && (
             <p className="form-error">{actionData.errors.address}</p>
