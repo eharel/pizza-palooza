@@ -11,7 +11,7 @@ function Button({
   to?: string;
   classNameAddition?: string;
 }) {
-  const className = `btn btn-primary ${classNameAddition}`;
+  const className = `btn ${disabled ? "bg-gray-300 text-gray-500 cursor-not-allowed pointer-events-none no-animation" : "btn-primary"} ${classNameAddition}`;
 
   if (to) {
     return (
