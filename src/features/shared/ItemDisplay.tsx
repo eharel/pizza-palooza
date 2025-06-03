@@ -1,5 +1,7 @@
 import { formatCurrency } from "../../utils/helpers";
 import type { CartItemData } from "../../types/cart";
+import QuantityControl from "./QuantityControl";
+import RemoveButton from "./RemoveButton";
 
 type ItemDisplayProps = {
   item: CartItemData;
@@ -42,35 +44,11 @@ function ItemDisplay({
     <li className="flex items-center justify-between border-b border-stone-light py-3">
       <div className="flex items-center gap-4">
         {interactive ? (
-          <div className="flex items-center">
-            <div className="flex h-8 items-center rounded-l-full bg-cheese-light px-1">
-              <button
-                onClick={handleDecrement}
-                disabled={quantity <= 1}
-                className={`flex h-6 w-6 items-center justify-center rounded-full text-sm font-bold transition-colors ${
-                  quantity <= 1
-                    ? "cursor-not-allowed bg-stone-light/50 text-stone-dark/40"
-                    : "cursor-pointer bg-white text-stone-dark hover:bg-stone-light"
-                }`}
-                aria-label="Decrease quantity"
-                aria-disabled={quantity <= 1}
-              >
-                −
-              </button>
-            </div>
-            <span className="flex h-8 w-8 items-center justify-center bg-cheese-light font-display text-sm text-stone-dark">
-              {quantity}
-            </span>
-            <div className="flex h-8 items-center rounded-r-full bg-cheese-light px-1">
-              <button
-                onClick={handleIncrement}
-                className="flex h-6 w-6 items-center justify-center rounded-full bg-white text-sm font-bold text-stone-dark transition-colors hover:bg-stone-light"
-                aria-label="Increase quantity"
-              >
-                +
-              </button>
-            </div>
-          </div>
+          <QuantityControl
+            quantity={quantity}
+            onDecrement={handleDecrement}
+            onIncrement={handleIncrement}
+          />
         ) : (
           <span className="flex h-8 w-8 items-center justify-center rounded-full bg-cheese-light font-display text-sm text-stone-dark">
             {quantity}
@@ -83,14 +61,7 @@ function ItemDisplay({
           {formatCurrency(totalPrice ?? pizza.unitPrice * quantity)}
         </p>
         {interactive && onRemove && (
-          <button
-            onClick={handleRemove}
-            className="flex h-6 w-6 items-center justify-center rounded-full bg-stone-light text-xs text-stone-dark transition-colors hover:bg-tomato hover:text-white"
-            aria-label={`Remove ${name} from cart`}
-            title="Remove from cart"
-          >
-            &times;
-          </button>
+          <RemoveButton onClick={handleRemove} name={name} />
         )}
       </div>
     </li>
