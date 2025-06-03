@@ -7,20 +7,18 @@ import {
   decreaseQuantity,
   increaseQuantity,
   removeItem,
+  selectPizzaQuantity,
 } from "../cart/cartSlice";
 import QuantityControl from "../shared/QuantityControl";
 import RemoveButton from "../shared/RemoveButton";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
 
 function MenuItem({ pizza }: { pizza: Pizza }) {
   const { name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
   const dispatch = useDispatch();
 
-  const quantity = useSelector(
-    (state: RootState) =>
-      state.cart.items.find((item) => item.pizza.id === pizza.id)?.quantity,
-  );
+  const quantity = useSelector(selectPizzaQuantity(pizza.id));
+  const isInCart = quantity > 0;
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -77,14 +75,7 @@ function MenuItem({ pizza }: { pizza: Pizza }) {
 
         {!soldOut ? (
           <div className="flex items-center justify-between gap-2">
-            {!quantity ? (
-              <Button
-                classNameAddition="mx-auto block"
-                onClick={(e) => handleAddToCart(e)}
-              >
-                Add to cart
-              </Button>
-            ) : (
+            {isInCart ? (
               <>
                 <QuantityControl
                   quantity={quantity ?? 1}
@@ -102,6 +93,13 @@ function MenuItem({ pizza }: { pizza: Pizza }) {
                   name={name}
                 />
               </>
+            ) : (
+              <Button
+                classNameAddition="mx-auto block"
+                onClick={(e) => handleAddToCart(e)}
+              >
+                Add to cart
+              </Button>
             )}
           </div>
         ) : (

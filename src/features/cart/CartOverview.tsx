@@ -8,9 +8,9 @@ import {
 import { formatCurrency } from "../../utils/helpers";
 
 function CartOverview() {
-  const totalPrice = useSelector(selectCartTotalPrice);
-  const totalPizzaTypes = useSelector(selectCartTotalPizzaTypes);
-  const totalPizzas = useSelector(selectCartTotalPizzaQuantity);
+  const totalPrice = useSelector(selectCartTotalPrice());
+  const totalPizzaTypes = useSelector(selectCartTotalPizzaTypes());
+  const totalPizzas = useSelector(selectCartTotalPizzaQuantity());
   const location = useLocation();
 
   // Don't render if there are no items in cart or if we're on the cart page

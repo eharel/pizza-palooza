@@ -57,23 +57,40 @@ const cartSlice = createSlice({
 });
 
 // Selectors
-export const selectCartItems = (state: { cart: Cart }) => state.cart.items;
+export function selectCartItems() {
+  return (state: { cart: Cart }) => state.cart.items;
+}
 
-export const selectCartTotalPrice = (state: { cart: Cart }) => {
-  return state.cart.items.reduce((total, item) => {
-    return total + (item.totalPrice || item.quantity * item.pizza.unitPrice);
-  }, 0);
-};
+// export function selectPizza(state: { cart: Cart }, id: number) {
+//   return state.cart.items.find((item) => item.pizza.id === id);
+// };
+export function selectPizza(id: number) {
+  return (state: { cart: Cart }) =>
+    state.cart.items.find((item) => item.pizza.id === id);
+}
 
-export const selectCartTotalPizzaTypes = (state: { cart: Cart }) => {
-  return state.cart.items.length;
-};
+export function selectPizzaQuantity(id: number) {
+  return (state: { cart: Cart }) =>
+    state.cart.items.find((item) => item.pizza.id === id)?.quantity ?? 0;
+}
 
-export const selectCartTotalPizzaQuantity = (state: { cart: Cart }) => {
-  return state.cart.items.reduce((total, item) => {
-    return total + item.quantity;
-  }, 0);
-};
+export function selectCartTotalPrice() {
+  return (state: { cart: Cart }) =>
+    state.cart.items.reduce((total, item) => {
+      return total + (item.totalPrice || item.quantity * item.pizza.unitPrice);
+    }, 0);
+}
+
+export function selectCartTotalPizzaTypes() {
+  return (state: { cart: Cart }) => state.cart.items.length;
+}
+
+export function selectCartTotalPizzaQuantity() {
+  return (state: { cart: Cart }) =>
+    state.cart.items.reduce((total, item) => {
+      return total + item.quantity;
+    }, 0);
+}
 
 export default cartSlice.reducer;
 export const {

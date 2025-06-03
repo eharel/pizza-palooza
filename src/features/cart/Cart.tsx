@@ -5,69 +5,33 @@ import ConfirmationDialog from "../../ui/ConfirmationDialog";
 import ItemDisplay from "../shared/ItemDisplay";
 import { formatCurrency } from "../../utils/helpers";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
 import {
   clearCart,
   decreaseQuantity,
   increaseQuantity,
   removeItem,
+  selectCartItems,
   selectCartTotalPrice,
 } from "./cartSlice";
-
-// const fakeCart = [
-//   {
-//     pizza: {
-//       id: 12,
-//       name: "Mediterranean",
-//       unitPrice: 16,
-//       imageUrl: "",
-//       ingredients: ["tomato", "mozzarella", "olives", "feta"],
-//       soldOut: false,
-//     },
-//     quantity: 2,
-//     totalPrice: 32,
-//   },
-//   {
-//     pizza: {
-//       id: 6,
-//       name: "Vegetale",
-//       unitPrice: 13,
-//       imageUrl: "",
-//       ingredients: ["tomato", "mozzarella", "vegetables"],
-//       soldOut: false,
-//     },
-//     quantity: 1,
-//     totalPrice: 13,
-//   },
-//   {
-//     pizza: {
-//       id: 11,
-//       name: "Spinach and Mushroom",
-//       unitPrice: 15,
-//       imageUrl: "",
-//       ingredients: ["tomato", "mozzarella", "spinach", "mushrooms"],
-//       soldOut: false,
-//     },
-//     quantity: 1,
-//     totalPrice: 15,
-//   },
-// ];
+import { selectUsername } from "../user/userSlice";
 
 type ConfirmationState = {
   type: "item" | "cart" | null;
   itemId?: number;
 };
 
+const deliveryFee = 5;
+
 function Cart() {
   const dispatch = useDispatch();
-  const cart = useSelector((state: RootState) => state.cart.items);
+  const cart = useSelector(selectCartItems());
   const [confirmation, setConfirmation] = useState<ConfirmationState>({
     type: null,
   });
-  const username = useSelector((state: RootState) => state.user.username);
+  const username = useSelector(selectUsername());
 
   // Calculate cart total
-  const totalPrice = useSelector(selectCartTotalPrice);
+  const totalPrice = useSelector(selectCartTotalPrice());
 
   // Handle item removal request
   const handleRemoveItem = (id: number) => {
@@ -155,11 +119,11 @@ function Cart() {
             </p>
             <p className="flex items-center justify-between text-sm font-medium">
               <span>Delivery fee:</span>
-              <span>{formatCurrency(5)}</span>
+              <span>{formatCurrency(deliveryFee)}</span>
             </p>
             <p className="flex items-center justify-between border-t border-stone pt-2 text-lg font-bold">
               <span>Total:</span>
-              <span>{formatCurrency(totalPrice + 5)}</span>
+              <span>{formatCurrency(totalPrice + deliveryFee)}</span>
             </p>
           </div>
 
