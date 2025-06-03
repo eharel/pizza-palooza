@@ -65,7 +65,11 @@ export const selectCartTotalPrice = (state: { cart: Cart }) => {
   }, 0);
 };
 
-export const selectCartTotalItems = (state: { cart: Cart }) => {
+export const selectCartTotalPizzaTypes = (state: { cart: Cart }) => {
+  return state.cart.items.length;
+};
+
+export const selectCartTotalPizzaQuantity = (state: { cart: Cart }) => {
   return state.cart.items.reduce((total, item) => {
     return total + item.quantity;
   }, 0);

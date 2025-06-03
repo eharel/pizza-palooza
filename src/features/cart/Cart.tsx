@@ -4,47 +4,54 @@ import LinkButton from "../../ui/Buttons/LinkButton";
 import ConfirmationDialog from "../../ui/ConfirmationDialog";
 import ItemDisplay from "../shared/ItemDisplay";
 import { formatCurrency } from "../../utils/helpers";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
+import {
+  clearCart,
+  decreaseQuantity,
+  increaseQuantity,
+  removeItem,
+  selectCartTotalPrice,
+} from "./cartSlice";
 
-const fakeCart = [
-  {
-    pizza: {
-      id: 12,
-      name: "Mediterranean",
-      unitPrice: 16,
-      imageUrl: "",
-      ingredients: ["tomato", "mozzarella", "olives", "feta"],
-      soldOut: false
-    },
-    quantity: 2,
-    totalPrice: 32,
-  },
-  {
-    pizza: {
-      id: 6,
-      name: "Vegetale",
-      unitPrice: 13,
-      imageUrl: "",
-      ingredients: ["tomato", "mozzarella", "vegetables"],
-      soldOut: false
-    },
-    quantity: 1,
-    totalPrice: 13,
-  },
-  {
-    pizza: {
-      id: 11,
-      name: "Spinach and Mushroom",
-      unitPrice: 15,
-      imageUrl: "",
-      ingredients: ["tomato", "mozzarella", "spinach", "mushrooms"],
-      soldOut: false
-    },
-    quantity: 1,
-    totalPrice: 15,
-  },
-];
+// const fakeCart = [
+//   {
+//     pizza: {
+//       id: 12,
+//       name: "Mediterranean",
+//       unitPrice: 16,
+//       imageUrl: "",
+//       ingredients: ["tomato", "mozzarella", "olives", "feta"],
+//       soldOut: false,
+//     },
+//     quantity: 2,
+//     totalPrice: 32,
+//   },
+//   {
+//     pizza: {
+//       id: 6,
+//       name: "Vegetale",
+//       unitPrice: 13,
+//       imageUrl: "",
+//       ingredients: ["tomato", "mozzarella", "vegetables"],
+//       soldOut: false,
+//     },
+//     quantity: 1,
+//     totalPrice: 13,
+//   },
+//   {
+//     pizza: {
+//       id: 11,
+//       name: "Spinach and Mushroom",
+//       unitPrice: 15,
+//       imageUrl: "",
+//       ingredients: ["tomato", "mozzarella", "spinach", "mushrooms"],
+//       soldOut: false,
+//     },
+//     quantity: 1,
+//     totalPrice: 15,
+//   },
+// ];
 
 type ConfirmationState = {
   type: "item" | "cart" | null;
@@ -52,14 +59,15 @@ type ConfirmationState = {
 };
 
 function Cart() {
-  const [cart, setCart] = useState(fakeCart);
+  const dispatch = useDispatch();
+  const cart = useSelector((state: RootState) => state.cart.items);
   const [confirmation, setConfirmation] = useState<ConfirmationState>({
     type: null,
   });
   const username = useSelector((state: RootState) => state.user.username);
 
   // Calculate cart total
-  const totalPrice = cart.reduce((sum, item) => sum + item.totalPrice, 0);
+  const totalPrice = useSelector(selectCartTotalPrice);
 
   // Handle item removal request
   const handleRemoveItem = (id: number) => {
@@ -71,30 +79,14 @@ function Cart() {
     setConfirmation({ type: "cart" });
   };
 
-  // Handle quantity update
-  const handleUpdateQuantity = (id: number, newQuantity: number) => {
-    setCart(
-      cart.map((item) => {
-        if (item.pizza.id === id) {
-          return {
-            ...item,
-            quantity: newQuantity,
-            totalPrice: item.pizza.unitPrice * newQuantity,
-          };
-        }
-        return item;
-      }),
-    );
-  };
-
   // Confirm action
   const confirmAction = () => {
     if (confirmation.type === "item" && confirmation.itemId !== undefined) {
       // Remove specific item
-      setCart(cart.filter((item) => item.pizza.id !== confirmation.itemId));
+      dispatch(removeItem(confirmation.itemId));
     } else if (confirmation.type === "cart") {
       // Clear entire cart
-      setCart([]);
+      dispatch(clearCart());
     }
     setConfirmation({ type: null });
   };
@@ -150,7 +142,8 @@ function Cart() {
                 item={item}
                 interactive={true}
                 onRemove={handleRemoveItem}
-                onUpdateQuantity={handleUpdateQuantity}
+                onIncrement={() => dispatch(increaseQuantity(item.pizza.id))}
+                onDecrement={() => dispatch(decreaseQuantity(item.pizza.id))}
               />
             ))}
           </ul>
