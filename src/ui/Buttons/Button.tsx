@@ -5,11 +5,13 @@ function Button({
   disabled = false,
   to,
   classNameAddition = "",
+  onClick,
 }: {
   children: React.ReactNode;
   disabled?: boolean;
   to?: string;
   classNameAddition?: string;
+  onClick?: (e: React.MouseEvent) => void;
 }) {
   const className = `btn ${disabled ? "bg-gray-300 text-gray-500 cursor-not-allowed pointer-events-none no-animation" : "btn-primary"} ${classNameAddition}`;
 
@@ -22,7 +24,7 @@ function Button({
   }
 
   return (
-    <button disabled={disabled} className={className}>
+    <button disabled={disabled} className={className} onClick={onClick}>
       {children}
     </button>
   );

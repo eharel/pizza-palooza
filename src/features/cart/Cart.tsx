@@ -4,47 +4,34 @@ import LinkButton from "../../ui/Buttons/LinkButton";
 import ConfirmationDialog from "../../ui/ConfirmationDialog";
 import ItemDisplay from "../shared/ItemDisplay";
 import { formatCurrency } from "../../utils/helpers";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
-
-const fakeCart = [
-  {
-    pizzaId: 12,
-    name: "Mediterranean",
-    quantity: 2,
-    unitPrice: 16,
-    totalPrice: 32,
-  },
-  {
-    pizzaId: 6,
-    name: "Vegetale",
-    quantity: 1,
-    unitPrice: 13,
-    totalPrice: 13,
-  },
-  {
-    pizzaId: 11,
-    name: "Spinach and Mushroom",
-    quantity: 1,
-    unitPrice: 15,
-    totalPrice: 15,
-  },
-];
+import { useDispatch, useSelector } from "react-redux";
+import {
+  clearCart,
+  decreaseQuantity,
+  increaseQuantity,
+  removeItem,
+  selectCartItems,
+  selectCartTotalPrice,
+} from "./cartSlice";
+import { selectUsername } from "../user/userSlice";
 
 type ConfirmationState = {
   type: "item" | "cart" | null;
   itemId?: number;
 };
 
+const deliveryFee = 5;
+
 function Cart() {
-  const [cart, setCart] = useState(fakeCart);
+  const dispatch = useDispatch();
+  const cart = useSelector(selectCartItems());
   const [confirmation, setConfirmation] = useState<ConfirmationState>({
     type: null,
   });
-  const username = useSelector((state: RootState) => state.user.username);
+  const username = useSelector(selectUsername());
 
   // Calculate cart total
-  const totalPrice = cart.reduce((sum, item) => sum + item.totalPrice, 0);
+  const totalPrice = useSelector(selectCartTotalPrice());
 
   // Handle item removal request
   const handleRemoveItem = (id: number) => {
@@ -56,30 +43,14 @@ function Cart() {
     setConfirmation({ type: "cart" });
   };
 
-  // Handle quantity update
-  const handleUpdateQuantity = (id: number, newQuantity: number) => {
-    setCart(
-      cart.map((item) => {
-        if (item.pizzaId === id) {
-          return {
-            ...item,
-            quantity: newQuantity,
-            totalPrice: item.unitPrice * newQuantity,
-          };
-        }
-        return item;
-      }),
-    );
-  };
-
   // Confirm action
   const confirmAction = () => {
     if (confirmation.type === "item" && confirmation.itemId !== undefined) {
       // Remove specific item
-      setCart(cart.filter((item) => item.pizzaId !== confirmation.itemId));
+      dispatch(removeItem(confirmation.itemId));
     } else if (confirmation.type === "cart") {
       // Clear entire cart
-      setCart([]);
+      dispatch(clearCart());
     }
     setConfirmation({ type: null });
   };
@@ -93,8 +64,8 @@ function Cart() {
   const getDialogProps = () => {
     if (confirmation.type === "item") {
       const itemName = cart.find(
-        (item) => item.pizzaId === confirmation.itemId,
-      )?.name;
+        (item) => item.pizza.id === confirmation.itemId,
+      )?.pizza.name;
       return {
         title: "Remove Item",
         message: `Are you sure you want to remove ${itemName || "this item"} from your cart?`,
@@ -131,11 +102,12 @@ function Cart() {
           <ul className="divide-y divide-stone-light">
             {cart.map((item) => (
               <ItemDisplay
-                key={item.pizzaId}
+                key={item.pizza.id}
                 item={item}
                 interactive={true}
                 onRemove={handleRemoveItem}
-                onUpdateQuantity={handleUpdateQuantity}
+                onIncrement={() => dispatch(increaseQuantity(item.pizza.id))}
+                onDecrement={() => dispatch(decreaseQuantity(item.pizza.id))}
               />
             ))}
           </ul>
@@ -147,11 +119,11 @@ function Cart() {
             </p>
             <p className="flex items-center justify-between text-sm font-medium">
               <span>Delivery fee:</span>
-              <span>{formatCurrency(5)}</span>
+              <span>{formatCurrency(deliveryFee)}</span>
             </p>
             <p className="flex items-center justify-between border-t border-stone pt-2 text-lg font-bold">
               <span>Total:</span>
-              <span>{formatCurrency(totalPrice + 5)}</span>
+              <span>{formatCurrency(totalPrice + deliveryFee)}</span>
             </p>
           </div>
 
