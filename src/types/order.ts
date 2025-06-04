@@ -1,4 +1,4 @@
-import { CartItemData } from "./cart";
+import { CartItem } from "./cart";
 
 export enum OrderStatus {
   PENDING = "pending",
@@ -9,27 +9,23 @@ export enum OrderStatus {
   CANCELLED = "cancelled",
 }
 
-export interface OrderCreateData {
+// Base shared properties between order form and final order
+export interface OrderBase {
   customer: string;
   phone: string;
   address: string;
   priority: boolean;
-  cart: CartItemData[];
+  cart: CartItem[]; // Name for API
 }
 
-export interface OrderItemData {
+// Complete order with server-generated data
+export interface Order extends OrderBase {
   id: string;
   status: OrderStatus;
-  customer: string;
-  phone: string;
-  address: string;
-  priority: boolean;
-  pizzas: CartItemData[];
   estimatedDelivery: string;
   position: string;
   orderPrice: number;
   priorityPrice: number;
-  cart: CartItemData[];
 }
 
 export type FieldError = "customer" | "phone" | "address";

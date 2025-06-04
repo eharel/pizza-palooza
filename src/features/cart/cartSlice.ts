@@ -1,15 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Cart, CartItemData } from "../../types/cart";
-import { Pizza } from "../../types/pizza";
+import { Cart, CartItem } from "../../types/cart";
+import { getCartItemsTotal } from "../../utils/cart";
 
 const initialState: Cart = {
-  items: [] as CartItemData[],
+  items: [] as CartItem[],
 };
 
 // ✅ Helper function
-const increaseItemQuantity = (item: CartItemData) => {
+const increaseItemQuantity = (item: CartItem) => {
   item.quantity++;
-  item.totalPrice = item.quantity * item.pizza.unitPrice;
+  item.totalPrice = item.quantity * item.unitPrice;
 };
 
 const cartSlice = createSlice({
@@ -18,13 +18,15 @@ const cartSlice = createSlice({
   reducers: {
     addItem(state, action) {
       const item = state.items.find(
-        (item) => item.pizza.id === action.payload.id,
+        (item: CartItem) => item.pizzaId === action.payload.id,
       );
       if (item) {
         increaseItemQuantity(item);
       } else {
-        const newCartItem = {
-          pizza: action.payload as Pizza,
+        const newCartItem: CartItem = {
+          pizzaId: action.payload.id,
+          name: action.payload.name,
+          unitPrice: action.payload.unitPrice,
           quantity: 1,
           totalPrice: action.payload.unitPrice,
         };
@@ -34,24 +36,28 @@ const cartSlice = createSlice({
     },
     removeItem(state, action) {
       state.items = state.items.filter(
-        (item) => item.pizza.id !== action.payload,
+        (item: CartItem) => item.pizzaId !== action.payload,
       );
     },
     increaseQuantity(state, action) {
-      const item = state.items.find((item) => item.pizza.id === action.payload);
+      const item = state.items.find(
+        (item: CartItem) => item.pizzaId === action.payload,
+      );
       if (item) {
         increaseItemQuantity(item);
       }
     },
     decreaseQuantity(state, action) {
-      const item = state.items.find((item) => item.pizza.id === action.payload);
+      const item = state.items.find(
+        (item: CartItem) => item.pizzaId === action.payload,
+      );
       if (item) {
         item.quantity--;
-        item.totalPrice = item.quantity * item.pizza.unitPrice;
+        item.totalPrice = item.quantity * item.unitPrice;
       }
     },
-    clearCart() {
-      return initialState;
+    clearCart(state) {
+      state.items = [];
     },
   },
 });
@@ -61,24 +67,19 @@ export function selectCartItems() {
   return (state: { cart: Cart }) => state.cart.items;
 }
 
-// export function selectPizza(state: { cart: Cart }, id: number) {
-//   return state.cart.items.find((item) => item.pizza.id === id);
-// };
 export function selectPizza(id: number) {
   return (state: { cart: Cart }) =>
-    state.cart.items.find((item) => item.pizza.id === id);
+    state.cart.items.find((item: CartItem) => item.pizzaId === id);
 }
 
 export function selectPizzaQuantity(id: number) {
   return (state: { cart: Cart }) =>
-    state.cart.items.find((item) => item.pizza.id === id)?.quantity ?? 0;
+    state.cart.items.find((item: CartItem) => item.pizzaId === id)?.quantity ??
+    0;
 }
 
 export function selectCartTotalPrice() {
-  return (state: { cart: Cart }) =>
-    state.cart.items.reduce((total, item) => {
-      return total + (item.totalPrice || item.quantity * item.pizza.unitPrice);
-    }, 0);
+  return (state: { cart: Cart }) => getCartItemsTotal(state.cart.items);
 }
 
 export function selectCartTotalPizzaTypes() {
@@ -87,7 +88,7 @@ export function selectCartTotalPizzaTypes() {
 
 export function selectCartTotalPizzaQuantity() {
   return (state: { cart: Cart }) =>
-    state.cart.items.reduce((total, item) => {
+    state.cart.items.reduce((total: number, item: CartItem) => {
       return total + item.quantity;
     }, 0);
 }

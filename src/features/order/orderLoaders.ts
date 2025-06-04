@@ -1,10 +1,10 @@
 import { LoaderFunctionArgs } from "react-router-dom";
 import { getOrder } from "../../services/apiRestaurant";
-import { OrderItemData } from "../../types/order";
+import { Order } from "../../types/order";
 
 export async function orderLoader({
   params,
-}: LoaderFunctionArgs): Promise<OrderItemData> {
+}: LoaderFunctionArgs): Promise<Order> {
   try {
     const id = params.id;
     if (!id) throw new Response("No order ID provided", { status: 404 });
