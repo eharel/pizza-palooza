@@ -64,8 +64,8 @@ function Cart() {
   const getDialogProps = () => {
     if (confirmation.type === "item") {
       const itemName = cart.find(
-        (item) => item.pizza.id === confirmation.itemId,
-      )?.pizza.name;
+        (item) => item.pizzaId === confirmation.itemId,
+      )?.name;
       return {
         title: "Remove Item",
         message: `Are you sure you want to remove ${itemName || "this item"} from your cart?`,
@@ -102,12 +102,12 @@ function Cart() {
           <ul className="divide-y divide-stone-light">
             {cart.map((item) => (
               <ItemDisplay
-                key={item.pizza.id}
+                key={item.pizzaId}
                 item={item}
                 interactive={true}
                 onRemove={handleRemoveItem}
-                onIncrement={() => dispatch(increaseQuantity(item.pizza.id))}
-                onDecrement={() => dispatch(decreaseQuantity(item.pizza.id))}
+                onIncrement={() => dispatch(increaseQuantity(item.pizzaId))}
+                onDecrement={() => dispatch(decreaseQuantity(item.pizzaId))}
               />
             ))}
           </ul>

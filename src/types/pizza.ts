@@ -1,5 +1,5 @@
 export interface Pizza {
-  id: number;
+  pizzaId: number;
   name: string;
   unitPrice: number;
   imageUrl: string;

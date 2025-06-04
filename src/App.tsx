@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ToastProvider } from "./contexts/ToastContext";
 import Home from "./ui/Home/Home";
 import Menu from "./features/menu/Menu";
 import { menuLoader } from "./features/menu/loaders";
@@ -44,7 +45,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <ToastProvider>
+      <RouterProvider router={router} />
+    </ToastProvider>
+  );
 }
 
 export default App;

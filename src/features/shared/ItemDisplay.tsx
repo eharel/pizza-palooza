@@ -1,10 +1,10 @@
 import { formatCurrency } from "../../utils/helpers";
-import type { CartItemData } from "../../types/cart";
+import type { CartItem } from "../../types/cart";
 import QuantityControl from "./QuantityControl";
 import RemoveButton from "./RemoveButton";
 
 type ItemDisplayProps = {
-  item: CartItemData;
+  item: CartItem;
   interactive?: boolean;
   onRemove?: (id: number) => void;
   onIncrement?: (id: number) => void;
@@ -18,9 +18,8 @@ function ItemDisplay({
   onIncrement,
   onDecrement,
 }: ItemDisplayProps) {
-  const { pizza, quantity, totalPrice } = item;
-  const pizzaId = pizza.id;
-  const name = pizza.name;
+  const { pizzaId, quantity, totalPrice } = item;
+  const name = item.name;
 
   const handleDecrement = () => {
     if (!interactive || !onDecrement) return;
@@ -58,7 +57,7 @@ function ItemDisplay({
       </div>
       <div className="flex items-center gap-4">
         <p className="font-bold text-stone-dark">
-          {formatCurrency(totalPrice ?? pizza.unitPrice * quantity)}
+          {formatCurrency(totalPrice)}
         </p>
         {interactive && onRemove && (
           <RemoveButton onClick={handleRemove} name={name} />

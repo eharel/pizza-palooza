@@ -1,16 +1,19 @@
 // Test ID: IIDSAT
 import { useLoaderData } from "react-router-dom";
+import OrderSuccessHandler from "./OrderSuccessHandler";
 import {
   calcMinutesLeft,
   formatCurrency,
   formatDate,
 } from "../../utils/helpers";
-import { OrderItemData, OrderStatus } from "../../types/order";
+import { Order as OrderType, OrderStatus } from "../../types/order";
 import LinkButton from "../../ui/Buttons/LinkButton";
 import ItemDisplay from "../shared/ItemDisplay";
 
 function Order() {
-  const order = useLoaderData() as OrderItemData;
+  const order = useLoaderData() as OrderType;
+  
+  // Include the OrderSuccessHandler to clear the cart after successful order creation
 
   // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
   const { priority, priorityPrice, orderPrice, estimatedDelivery, status, cart } =
@@ -48,6 +51,9 @@ function Order() {
       </h2>
 
       <div className="space-y-8">
+        {/* This component will clear the cart if we just created an order */}
+        <OrderSuccessHandler />
+        
         <div className="rounded-lg bg-stone-light/30 p-6">
           <h3 className="mb-3 text-xl font-semibold">Status</h3>
 
