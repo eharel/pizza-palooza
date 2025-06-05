@@ -10,6 +10,7 @@ export async function getMenu(): Promise<Pizza[]> {
   if (!res.ok) throw Error("An error occurred while fetching the menu");
 
   const { data } = await res.json();
+
   return data;
 }
 
