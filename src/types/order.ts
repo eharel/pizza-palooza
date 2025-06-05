@@ -14,6 +14,7 @@ export interface OrderBase {
   customer: string;
   phone: string;
   address: string;
+  position: string;
   priority: boolean;
   cart: CartItem[]; // Name for API
 }
