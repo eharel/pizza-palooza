@@ -3,25 +3,36 @@ import { FormErrors } from "../../types/order";
 import { ActionResults } from "../../types/shared";
 import Button from "../../ui/Buttons/Button";
 import { useSelector } from "react-redux";
-import { selectCartItems, selectCartTotalPrice } from "../cart/cartSlice";
+import { selectCartItems } from "../cart/cartSlice";
 import EmptyCart from "../cart/EmptyCart";
-import { selectUsername } from "../../features/user/userSlice";
+import { selectUser } from "../../features/user/userSlice";
 import { formatCurrency } from "../../utils/helpers";
 import { useState } from "react";
 import { getOrderPriceBreakdown } from "../../utils/cart";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store";
+import { fetchAddress } from "../../features/user/userSlice";
 
 function CreateOrder() {
   const [withPriority, setWithPriority] = useState(false);
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
-  const username = useSelector(selectUsername());
+  const {
+    username,
+    address,
+    status: addressStatus,
+    error: addressError,
+    position,
+  } = useSelector(selectUser());
+
+  const isLoadingAddress = addressStatus === "loading";
 
   const actionData = useActionData() as ActionResults<never, FormErrors> | null;
+  const dispatch = useDispatch<AppDispatch>();
 
   const cartItems = useSelector(selectCartItems());
 
-  const { itemsTotal, priorityFee, deliveryFee, totalPrice } =
-    getOrderPriceBreakdown(cartItems, withPriority);
+  const { totalPrice } = getOrderPriceBreakdown(cartItems, withPriority);
 
   if (!cartItems || cartItems.length === 0) {
     return <EmptyCart />;
@@ -72,18 +83,34 @@ function CreateOrder() {
           <label className="block font-medium text-text-secondary">
             Address
           </label>
-          <div>
+          <div className="flex gap-2">
             <input
               type="text"
               name="address"
               required
-              className="input"
-              defaultValue={""}
+              className="input flex-1"
+              defaultValue={address}
+              disabled={isLoadingAddress}
             />
+            {!position.latitude && !position.longitude && (
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  dispatch(fetchAddress());
+                }}
+                classNameAddition="bg-blue-500 hover:bg-blue-600 text-sm px-3 py-2 whitespace-nowrap"
+              >
+                📍 Get location
+              </Button>
+            )}
           </div>
-          {actionData?.success === false && actionData.errors?.address && (
-            <p className="form-error">{actionData.errors.address}</p>
+          {addressStatus === "failed" && (
+            <p className="form-error">{addressError}</p>
           )}
+          {/* {actionData?.success === false && actionData.errors?.address && (
+          
+            <p className="form-error">{actionData.errors.address}</p>
+          )} */}
         </div>
 
         <div className="flex items-center space-x-3 py-2">
@@ -103,7 +130,16 @@ function CreateOrder() {
 
         <div className="pt-4">
           <input type="hidden" name="cart" value={JSON.stringify(cartItems)} />
-          <Button disabled={isSubmitting}>
+          <input
+            type="hidden"
+            name="position"
+            value={
+              position.longitude && position.latitude
+                ? `${position.latitude},${position.longitude}`
+                : ""
+            }
+          />
+          <Button disabled={isSubmitting || isLoadingAddress}>
             {isSubmitting
               ? `Placing order... (${formatCurrency(totalPrice)})`
               : `Order now (${formatCurrency(totalPrice)})`}

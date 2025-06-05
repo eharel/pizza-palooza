@@ -18,6 +18,7 @@ export async function createOrderAction({
     customer: formData.get("customer") as string,
     phone: formData.get("phone") as string,
     address: formData.get("address") as string,
+    position: formData.get("position") as string,
     priority: formData.get("priority") === "true",
     cart: JSON.parse(cartValue),
   };
