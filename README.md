@@ -1,94 +1,109 @@
 # 🍕 PizzaPalooza
 
-A modern React frontend project that lets users browse a pizza menu, build their order, and submit it with just a few details — no login required. Built with a focus on user experience and responsive design, this project demonstrates core React concepts like state management, forms, routing, and API interaction.
-
 ![PizzaPalooza Screenshot](./public/pizza-pattern.png)
 
----
+A modern React application for ordering pizza online with a focus on user experience and responsive design. PizzaPalooza allows users to browse a menu, customize their order, and place it without requiring an account. This project demonstrates modern React patterns, TypeScript, and state management techniques.
 
-## 🚀 Features
+## ✨ Features
 
-### 🧑‍🍳 User
+### 🍕 Menu & Ordering
 
-- No authentication required
-- Enter name, phone number, and address to place an order
-- GPS location autofill option for address (if user grants permission)
-- Mark an order as **priority** (adds 20% to total price)
-- Search for an order by unique order ID
-- Upgrade an existing order to **priority** after it's placed
+- **Dynamic Menu**: Fetches pizza menu from API with real-time availability
+- **Detailed Pizza Information**: View name, ingredients, price, and availability status
+- **Cart Management**: Add, remove, and adjust quantities of pizzas in your cart
+- **Order Placement**: Submit delivery details and place orders without registration
+- **Order Lookup**: Search for existing orders using order ID
 
-### 🍕 Menu
+### 💰 Priority Orders
 
-- Dynamic pizza menu loaded from API
-- Responsive grid layout displaying multiple pizzas per row
-- Displays pizza names, ingredients, prices, and availability status
-- Visual indicators for sold-out items
+- **Priority Option**: Mark orders as priority during checkout (20% price increase)
+- **Priority Upgrade**: Upgrade existing orders to priority status
+- **Confirmation Dialog**: Clear pricing information with confirmation before upgrading
 
-### 🛒 Cart
+### 🛒 Cart Experience
 
-- Add one or more pizzas to cart
-- Increase/decrease quantity or remove pizzas
-- Persistent cart overview at bottom of screen
-- Automatically updates total price (including priority fee if selected)
+- **Persistent Cart**: Cart remains visible while browsing
+- **Empty Cart State**: Styled empty cart view with call-to-action
+- **Price Breakdown**: Itemized pricing including base price, delivery fee, and priority fee
+- **Ingredient Display**: View all ingredients for each pizza in cart
 
-### 📦 Order
+### 🧠 Smart UX Features
 
-- Place order by submitting a form with user and cart data
-- Sends a `POST` request to API
-- Payment is on delivery — no payment processing required
-- Each order receives a unique ID for lookup
+- **Loading States**: Visual feedback during API operations
+- **Confirmation Dialogs**: Prevent accidental actions with clear confirmations
+- **Responsive Design**: Works seamlessly on mobile, tablet, and desktop
+- **Form Validation**: Input validation for required fields
 
----
+## 🛠️ Technology Stack
 
-## 🛠️ Tech Stack
+- **React 18**: Modern component-based UI development
+- **TypeScript**: Static typing for improved developer experience and code quality
+- **React Router 6**: Client-side routing with data loading and mutations
+- **Redux**: State management for cart and application state
+- **Tailwind CSS**: Utility-first styling approach with custom design system
 
-- **React 18** - Modern UI library
-- **TypeScript** - Type safety and better developer experience
-- **React Router** – Page navigation and routing
-- **Context API** – Global state management (e.g., cart, orders)
-- **Vite** – Lightning-fast development environment
-- **Tailwind CSS** – Utility-first CSS framework for styling
-  - Custom color palette with pizza-themed colors
-  - Responsive design with mobile-first approach
-  - Custom component classes for buttons, cards, and inputs
-- **Custom Hooks** – For features like geolocation and form handling
+## 🏗️ Architecture
 
----
-
-## 🎨 Design System
-
-### Colors
-
-- **Primary** - Red tones for main actions and branding
-- **Cheese** - Amber tones for secondary elements
-- **Crust** - Brown tones for warm accents
-- **Basil/Olive** - Green tones for fresh/eco-friendly elements
-- **Surface** - Neutral backgrounds and containers
-- **Text** - Text hierarchy with primary, secondary, and light variants
-
-### Components
-
-- **Buttons** - Primary, secondary, and outline variants
-- **Cards** - For menu items, features, and content containers
-- **Inputs** - Styled form elements with focus states
-- **Layout** - Responsive grid and flex layouts
-
----
+- **Feature-Based Structure**: Code organized by domain features
+- **Component Composition**: Reusable UI components with clear responsibilities
+- **Data Fetching Pattern**: React Router loaders and actions for data operations
+- **Type Safety**: Comprehensive TypeScript types for API responses and app state
 
 ## 📁 Project Structure
 
 ```
 src/
-├── ui/              # Shared UI components (Header, Footer, etc.)
-├── features/        # Domain logic organized by feature
-│   ├── cart/        # Cart functionality
+├── ui/              # Reusable UI components (buttons, dialogs, etc.)
+├── features/        # Domain-specific features
+│   ├── cart/        # Cart functionality and components
 │   ├── menu/        # Menu display and filtering
-│   ├── order/       # Order creation and management
-│   └── user/        # User information handling
-├── services/        # API calls and external services
-├── utils/           # Utility functions and helpers
+│   ├── order/       # Order creation, lookup, and management
+│   └── shared/      # Shared components across features
+├── services/        # API integration and external services
+├── utils/           # Helper functions and utilities
+├── constants/       # Application constants and configuration
 ├── types/           # TypeScript type definitions
-├── index.css        # Global styles and Tailwind directives
-├── App.tsx          # Main app component with routing
-└── main.tsx         # Entry point
+├── App.tsx          # Main application component with routing
+└── main.tsx         # Application entry point
 ```
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js (v16+)
+- npm or yarn
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/pizza-palooza.git
+cd pizza-palooza
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+```
+
+### Available Scripts
+
+- `npm run dev`: Start development server
+- `npm run build`: Build for production
+- `npm run preview`: Preview production build locally
+
+## 🔮 Future Enhancements
+
+Potential features for future development:
+
+- User accounts and order history
+- Pizza customization options
+- Real-time order tracking
+- Payment processing integration
+- Admin dashboard for restaurant management
+
+---
+
+Built with ❤️ and 🍕

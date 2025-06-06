@@ -153,7 +153,11 @@ function Order() {
         </div>
       </div>
 
-      <div className="mt-6">{!priority && <UpdateOrder />}</div>
+      <div className="mt-6">
+        {!priority && status !== OrderStatus.DELIVERED && (
+          <UpdateOrder order={order} />
+        )}
+      </div>
     </div>
   );
 }
