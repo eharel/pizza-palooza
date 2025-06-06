@@ -1,6 +1,6 @@
 # 🍕 PizzaPalooza
 
-![PizzaPalooza Screenshot](./public/pizza-pattern.png)
+<img width="1510" alt="Image" src="https://github.com/user-attachments/assets/cc7342e1-f881-4a94-abe4-f2c59251927a" />
 
 A modern React application for ordering pizza online with a focus on user experience and responsive design. PizzaPalooza allows users to browse a menu, customize their order, and place it without requiring an account. This project demonstrates modern React patterns, TypeScript, and state management techniques.
 
