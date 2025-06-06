@@ -1,8 +1,16 @@
 # 🍕 PizzaPalooza
 
+![React](https://img.shields.io/badge/React-18-blue?logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-4.9-blue?logo=typescript)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.3-06B6D4?logo=tailwindcss)
+![Redux](https://img.shields.io/badge/Redux-Toolkit-purple?logo=redux)
+![Vite](https://img.shields.io/badge/Vite-5.0-yellow?logo=vite)
+
 <img width="1510" alt="Image" src="https://github.com/user-attachments/assets/cc7342e1-f881-4a94-abe4-f2c59251927a" />
 
-A modern React application for ordering pizza online with a focus on user experience and responsive design. PizzaPalooza allows users to browse a menu, customize their order, and place it without requiring an account. This project demonstrates modern React patterns, TypeScript, and state management techniques.
+**🔗 Live Demo:** [PizzaPalooza](https://pizzapalooza.vercel.app)
+
+A modern React + TypeScript app for ordering pizza online. PizzaPalooza lets users browse a dynamic menu, customize orders, and place them without registration. Built with best practices in modern React patterns, strong UX, and responsive design.
 
 ## ✨ Features
 
@@ -22,7 +30,7 @@ A modern React application for ordering pizza online with a focus on user experi
 
 ### 🛒 Cart Experience
 
-- **Persistent Cart**: Cart remains visible while browsing
+- **Sticky Cart**: Cart remains visible while browsing the menu
 - **Empty Cart State**: Styled empty cart view with call-to-action
 - **Price Breakdown**: Itemized pricing including base price, delivery fee, and priority fee
 - **Ingredient Display**: View all ingredients for each pizza in cart
