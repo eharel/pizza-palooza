@@ -9,15 +9,28 @@ import {
 import { Order as OrderType, OrderStatus } from "../../types/order";
 import LinkButton from "../../ui/Buttons/LinkButton";
 import ItemDisplay from "../shared/ItemDisplay";
+import { useFetcher } from "react-router-dom";
+import { useEffect } from "react";
+import { Pizza } from "../../types/pizza";
+import UpdateOrder from "./UpdateOrder";
 
 function Order() {
   const order = useLoaderData() as OrderType;
-  
-  // Include the OrderSuccessHandler to clear the cart after successful order creation
+  const fetcher = useFetcher();
+
+  useEffect(() => {
+    if (!fetcher.data && fetcher.state === "idle") fetcher.load("/menu");
+  }, [fetcher]);
 
   // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
-  const { priority, priorityPrice, orderPrice, estimatedDelivery, status, cart } =
-    order;
+  const {
+    priority,
+    priorityPrice,
+    orderPrice,
+    estimatedDelivery,
+    status,
+    cart,
+  } = order;
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
 
   // Get status-specific color
@@ -53,7 +66,7 @@ function Order() {
       <div className="space-y-8">
         {/* This component will clear the cart if we just created an order */}
         <OrderSuccessHandler />
-        
+
         <div className="rounded-lg bg-stone-light/30 p-6">
           <h3 className="mb-3 text-xl font-semibold">Status</h3>
 
@@ -63,7 +76,9 @@ function Order() {
                 PRIORITY
               </span>
             )}
-            <span className={`rounded-full ${getStatusColor(status as OrderStatus)} px-3 py-1 text-sm font-bold text-white shadow-sm`}>
+            <span
+              className={`rounded-full ${getStatusColor(status as OrderStatus)} px-3 py-1 text-sm font-bold text-white shadow-sm`}
+            >
               {status.toUpperCase()}
             </span>
           </div>
@@ -90,15 +105,27 @@ function Order() {
 
         <div className="rounded-lg bg-stone-light/30 p-6">
           <h3 className="mb-3 text-xl font-semibold">Order Items</h3>
-          
+
           {cart && cart.length > 0 ? (
             <ul className="mb-4 divide-y divide-stone-light">
               {cart.map((item) => (
-                <ItemDisplay key={item.pizzaId} item={item} interactive={false} />
+                <ItemDisplay
+                  key={item.pizzaId}
+                  item={item}
+                  interactive={false}
+                  isLoadingIngredients={fetcher.state === "loading"}
+                  ingredients={
+                    fetcher.data?.find(
+                      (pizza: Pizza) => pizza.id === item.pizzaId,
+                    )?.ingredients
+                  }
+                />
               ))}
             </ul>
           ) : (
-            <p className="italic text-stone-dark">No items found in this order</p>
+            <p className="italic text-stone-dark">
+              No items found in this order
+            </p>
           )}
         </div>
 
@@ -124,6 +151,12 @@ function Order() {
             </p>
           </div>
         </div>
+      </div>
+
+      <div className="mt-6">
+        {!priority && status !== OrderStatus.DELIVERED && (
+          <UpdateOrder order={order} />
+        )}
       </div>
     </div>
   );

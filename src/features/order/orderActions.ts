@@ -1,6 +1,6 @@
-import { createOrder } from "../../services/apiRestaurant";
+import { createOrder, updateOrder } from "../../services/apiRestaurant";
 import { OrderBase, FormErrors } from "../../types/order";
-import { redirect } from "react-router-dom";
+import { redirect, ActionFunctionArgs } from "react-router-dom";
 import { ActionResults } from "../../types/shared";
 
 export async function createOrderAction({
@@ -55,4 +55,12 @@ function checkForErrors(order: OrderBase): FormErrors | null {
   }
 
   return Object.keys(errors).length > 0 ? errors : null;
+}
+
+export async function updateOrderAction({ params }: ActionFunctionArgs) {
+  const data = { priority: true };
+  const id = params.id;
+  if (!id) throw new Response("No order ID provided", { status: 404 });
+  await updateOrder(id, data);
+  return null;
 }
