@@ -1,7 +1,7 @@
-import { OrderItemData } from "../../types/order";
+import { CartItem } from "../../types/cart";
 import { formatCurrency } from "../../utils/helpers";
 
-function OrderItem({ item }: { item: OrderItemData }) {
+function OrderItem({ item }: { item: CartItem }) {
   const { quantity, name, totalPrice } = item;
 
   return (
