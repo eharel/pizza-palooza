@@ -12,6 +12,7 @@ import ItemDisplay from "../shared/ItemDisplay";
 import { useFetcher } from "react-router-dom";
 import { useEffect } from "react";
 import { Pizza } from "../../types/pizza";
+import UpdateOrder from "./UpdateOrder";
 
 function Order() {
   const order = useLoaderData() as OrderType;
@@ -151,6 +152,8 @@ function Order() {
           </div>
         </div>
       </div>
+
+      <div className="mt-6">{!priority && <UpdateOrder />}</div>
     </div>
   );
 }
